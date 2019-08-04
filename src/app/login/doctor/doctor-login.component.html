@@ -1,0 +1,53 @@
+<ActionBar class="action-bar">
+    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+</ActionBar>
+
+<StackLayout class="page page-icon form" [formGroup]="form" paddingBottom="20">
+    <StackLayout paddingBottom="50" paddingTop="20" >
+        <Label class="text-center page-title" text="Medical Practitioner Login Screen'"></Label>
+    </StackLayout>
+    <StackLayout>
+        <TextField
+                class="input input-field"
+                returnKeyType="next"
+                keyboardType="email"
+                [autocorrect]="false"
+                autocapitalizationType="none"
+                formControlName="email"
+                hint="Email"
+                #emailEl
+        ></TextField>
+        <Label
+                *ngIf="!emailControlIsValid"
+                class="input-error"
+                text="Please enter a valid email."
+        ></Label>
+    </StackLayout>
+    <StackLayout class="">
+        <TextField
+                class="input input-field"
+                returnKeyType="done"
+                [autocorrect]="false"
+                autocapitalizationType="none"
+                [secure]="true"
+                hint="Password"
+                formControlName="password"
+                (returnPress)="onDone()"
+                #passwordEl
+        ></TextField>
+        <Label  class="input-error"
+                *ngIf="!passwordControlIsValid"
+                text="Must be 6+ characters long."
+        ></Label>
+    </StackLayout>
+    <Button
+            class="btn password-login-button"
+            text="Login"
+            (tap)="onSubmit()"
+            [disabled]="!form.valid"
+
+    ></Button>
+    <Label>Forgot Password?<a href="">Click Here.</a> </Label>
+    <Label>First Time User? <a href="">Register Here.</a> </Label>
+    <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
+</StackLayout>
