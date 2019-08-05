@@ -37,3 +37,7 @@
     width: 90%;
     color: red;
 }
+
+Label {
+    font-size: 15px;
+}

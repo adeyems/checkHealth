@@ -45,3 +45,6 @@ refer to http://docs.nativescript.org/ui/theme.
     font-family: Consolas, Monaco, monospace;
     font-size: 5px;
 }
+Label {
+    font-size: 12px;
+}

@@ -60,10 +60,35 @@ export class PatientLoginComponent implements OnInit {
     }
 
     onSubmit() {
-        this.router.navigate(["patientHome"]).then()
+        this.emailEl.nativeElement.focus();
+        this.passwordEl.nativeElement.focus();
+        this.passwordEl.nativeElement.dismissSoftInput();
+
+        if (!this.form.valid) {
+            return;
+        }
+
+        const email = this.form.get('email').value;
+        const password = this.form.get('password').value;
+
+        this.form.reset();
+        this.emailControlIsValid = true;
+        this.passwordControlIsValid = true;
+        this.isLoading = true;
+        this.authService.login(email, password).subscribe(
+            resData => {
+                console.log(resData);
+                this.isLoading = false;
+                this.router.navigate(['patientHome'], { clearHistory: true }).then();
+            },
+            err => {
+                console.log(err);
+                this.isLoading = false;
+            }
+        );
     }
 
-    goToSignup() {
+    goToSignUp() {
         this.router.navigate(["patientSignup"]).then()
     }
 }

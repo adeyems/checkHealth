@@ -124,9 +124,8 @@ export class SignupComponent implements OnInit {
             resData => {
                 console.log(resData);
                 this.isLoading = false;
-                if (this.currentUser == "patient"){
-                    this.router.navigate(['patientLogin'], { clearHistory: true }).then();
-                }
+                this.router.navigate(['patientLogin'], { clearHistory: true }).then();
+
             },
             err => {
                 console.log(err);

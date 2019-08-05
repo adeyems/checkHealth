@@ -62,15 +62,17 @@ export class AuthService {
                     AuthService.handleError(errorRes.error.error.message);
                     return throwError(errorRes);
                 }),
-                /*tap(resData => {
+                tap(resData => {
                     if (resData && resData.idToken) {
-                        return this.createNewUser(name, surname, phone, email, password, resData)
+                        alert("Your Account was created successfully").catch();
+                        this.router.navigate(['patientLogin'])
+                        /*return this.createNewUser(name, surname, phone, email, password, resData)
                             .subscribe( resData => {
                                 console.log(resData);
                                 alert("Your Account was created successfully").catch();
-                            })
+                            })*/
                     }
-                })*/
+                })
             );
     }
 
@@ -88,6 +90,7 @@ export class AuthService {
                 tap(resData => {
                     if (resData && resData.idToken) {
                         console.log(resData);
+                        this.handleLogin(email, resData.idToken, resData.localId, 3600)
                     }
                 })
             );

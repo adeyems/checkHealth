@@ -1,6 +1,5 @@
-<ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
-</ActionBar>
+ <StackLayout>
+     <Label class="text-center" textWrap="true" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
 
 <StackLayout class="page page-icon form" [formGroup]="form" paddingBottom="20">
     <StackLayout paddingBottom="50" paddingTop="20">
@@ -46,14 +45,17 @@
             (tap)="onSubmit()"
             [disabled]="!form.valid"
     ></Button>
-    <Button text="Sign up" (tap)="goToSignup()"></Button>
-    <!--<GridLayout class="text-center" columns="3">
-        <Label col="0"></Label>
-        <Label col="1" class="small" text="First Time User?"> </Label>
-        <Label text="Click Here"  col="2" class="small" ></Label>
-        <Label col="0"></Label>
-        <Label text="Click Here" col="1" class="small" textWrap="true" ></Label>
-        <Label col="2" text="First Time User?" class="small"> </Label>
-    </GridLayout>-->
-
+    <GridLayout rows="auto, auto" paddingTop="15">
+        <GridLayout row="0" class="text-center small" columns="*,4*,3*">
+            <Label col="0"></Label>
+            <Label col="1" class="small" text="Forgot Password?"> </Label>
+            <Label text="Click Here"  col="2" class="small link" ></Label>
+        </GridLayout>
+        <GridLayout row="1" class="text-center small" columns="*,5*,4*" paddingTop="15">
+            <Label col="0"></Label>
+            <Label col="1" class="small" text="First time user?"> </Label>
+            <Label text="Click Here"  col="2" class="small link" (tap)="goToSignUp()"></Label>
+        </GridLayout>
+    </GridLayout>
 </StackLayout>
+ </StackLayout>
