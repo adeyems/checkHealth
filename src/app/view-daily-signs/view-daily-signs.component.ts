@@ -1,17 +1,18 @@
 import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
 import {RouterExtensions} from "nativescript-angular";
+import {of} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TextField} from "tns-core-modules/ui/text-field";
-import {AuthService} from "~/app/services/auth.service";
+import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: "Home",
     moduleId: module.id,
-    templateUrl: "./patient-login.component.html",
-    styleUrls: ["./patient-login.component.css"]
+    templateUrl: "./view-daily-signs.component.html",
+    styleUrls: ["./view-daily-signs.component.css"]
 })
-export class PatientLoginComponent implements OnInit {
+export class ViewDailySignsComponent implements OnInit {
     form: FormGroup;
     emailControlIsValid = true;
     passwordControlIsValid = true;
@@ -41,7 +42,7 @@ export class PatientLoginComponent implements OnInit {
             password: new FormControl(null, {
                 updateOn: 'blur',
                 validators: [Validators.required, Validators.minLength(6)]
-            }),
+            })
         });
 
         this.form.get('email').statusChanges.subscribe(status => {
@@ -53,21 +54,40 @@ export class PatientLoginComponent implements OnInit {
         });
     }
 
+    onSubmit() {
+        this.emailEl.nativeElement.focus();
+        this.passwordEl.nativeElement.focus();
+        this.passwordEl.nativeElement.dismissSoftInput();
+
+        if (!this.form.valid) {
+            return;
+        }
+
+        const email = this.form.get('email').value;
+        const password = this.form.get('password').value;
+        this.form.reset();
+        this.emailControlIsValid = true;
+        this.passwordControlIsValid = true;
+        this.isLoading = true;
+        this.authService.login(email, password).subscribe(
+            resData => {
+                this.isLoading = false;
+                this.router.navigate(['/challenges'], { clearHistory: true }).then();
+            },
+            err => {
+                console.log(err);
+                this.isLoading = false;
+            }
+        );
+    }
+
     onDone() {
         this.emailEl.nativeElement.focus();
         this.passwordEl.nativeElement.focus();
         this.passwordEl.nativeElement.dismissSoftInput();
     }
 
-    onSubmit() {
-        this.router.navigate(["patientHome"]).then()
-    }
-
-    goToSignup() {
-        this.router.navigate([""]).then()
-    }
-
-    goToSignUp() {
-        this.router.navigate(["signup"]).then()
+    goToBrowseRelevantInfo() {
+        this.router.navigate(["relevantInfo"]).then();
     }
 }
