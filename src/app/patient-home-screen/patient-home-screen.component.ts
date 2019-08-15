@@ -90,4 +90,8 @@ export class PatientHomeScreenComponent implements OnInit {
     goToBrowseRelevantInfo() {
         this.router.navigate(["relevantInfo"]).then();
     }
+
+    goToReadings() {
+        this.router.navigate(["readings"]).then();
+    }
 }

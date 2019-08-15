@@ -9,10 +9,10 @@ import {ActivatedRoute} from "@angular/router";
 @Component({
     selector: "Home",
     moduleId: module.id,
-    templateUrl: "./doctor-home-screen.component.html",
-    styleUrls: ["./doctor-home-screen.component.css"]
+    templateUrl: "./readings.component.html",
+    styleUrls: ["./readings.component.css"]
 })
-export class DoctorHomeScreenComponent implements OnInit {
+export class ReadingsComponent implements OnInit {
     form: FormGroup;
     emailControlIsValid = true;
     passwordControlIsValid = true;
@@ -87,11 +87,7 @@ export class DoctorHomeScreenComponent implements OnInit {
         this.passwordEl.nativeElement.dismissSoftInput();
     }
 
-    goToPatientHome() {
-
-    }
-
-    goToPatientDailySigns(){
-        this.router.navigate(["daily-signs"]).catch();
+    goToBrowseRelevantInfo() {
+        this.router.navigate(["relevantInfo"]).then();
     }
 }

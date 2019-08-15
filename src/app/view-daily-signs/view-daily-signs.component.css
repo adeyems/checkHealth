@@ -36,14 +36,4 @@
 .input-error {
     width: 90%;
     color: red;
-    font-size: 12px;
-}
-
-Label {
-    font-size: 15px;
-}
-
-.link {
-    text-decoration: underline;
-    color: blue;
 }

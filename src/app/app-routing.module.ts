@@ -8,6 +8,10 @@ import {SignupComponent} from "~/app/signup/signup.component";
 import {PatientHomeScreenComponent} from "~/app/patient-home-screen/patient-home-screen.component";
 import {DoctorHomeScreenComponent} from "~/app/doctor-home-screen/doctor-home-screen.component";
 import {RelevantInfoComponent} from "~/app/relevant-info/relevant-info.component";
+import {PatientDailySignsComponent} from "~/app/patient-daily-signs/patient-daily-signs.component";
+import {CreateHistoryComponent} from "~/app/create-history/create-history.component";
+import {ViewHistoryComponent} from "~/app/view-history/view-history.component";
+import {ReadingsComponent} from "~/app/readings/readings.component";
 
 const routes: Routes = [
     { path: "doctorLogin", component: DoctorLoginComponent },
@@ -16,8 +20,11 @@ const routes: Routes = [
     { path: "patientSignup", component: SignupComponent },
     { path: "patientHome", component:  PatientHomeScreenComponent},
     { path: "doctorHome", component:  DoctorHomeScreenComponent},
-    { path: "patientSignup", component: SignupComponent },
     { path: "relevantInfo", component: RelevantInfoComponent},
+    { path: "daily-signs", component: PatientDailySignsComponent},
+    { path: "createHistory", component:  CreateHistoryComponent},
+    { path: "viewHistory", component:  ViewHistoryComponent},
+    { path: "readings", component: ReadingsComponent},
     { path: "", redirectTo: "/login", pathMatch: "full" },
 ];
 

@@ -22,8 +22,8 @@
 
 .input {
     border-color: #226600;
-    width: 90%;
-    height: 200px;
+    width: 70%;
+    height: 80px;
     border-radius: 8%;
     border-width: 5px;
 }
@@ -36,14 +36,31 @@
 .input-error {
     width: 90%;
     color: red;
-    font-size: 12px;
 }
 
 Label {
-    font-size: 15px;
+    padding-bottom: 10px;
 }
 
-.link {
+.module-section-title {
+    color: #AEAEAE;
+    font-size: 12px;
+    font-family: Open Sans, Semibold, serif;
+    horizontal-align: left;
+}
+ListPicker {
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+.underline {
     text-decoration: underline;
-    color: blue;
+}
+
+.readings {
+    font-size: 10px;
+}
+
+.text-center {
+    font-weight: bold;
 }

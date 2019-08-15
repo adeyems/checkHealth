@@ -91,4 +91,5 @@ export class PatientLoginComponent implements OnInit {
     goToSignUp() {
         this.router.navigate(["patientSignup"]).then()
     }
+
 }
