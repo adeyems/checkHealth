@@ -24,6 +24,6 @@ export class LoginComponent implements OnInit {
 
     goToMedicalPractitionerLogin() {
         console.log("doctor");
-        this.routerExtensions.navigate(["doctorLogin"]).catch( error => console.log(error));
+        this.routerExtensions.navigate(["daily-signs"]).catch( error => console.log(error));
     }
 }

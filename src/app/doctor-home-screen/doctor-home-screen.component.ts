@@ -90,4 +90,8 @@ export class DoctorHomeScreenComponent implements OnInit {
     goToPatientHome() {
 
     }
+
+    goToPatientDailySigns(){
+        this.router.navigate(["daily-signs"]).catch();
+    }
 }

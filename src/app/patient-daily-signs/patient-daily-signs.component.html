@@ -1,0 +1,87 @@
+<ActionBar class="action-bar">
+    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+</ActionBar>
+<Scrollview>
+    <StackLayout  class="page ">
+        <StackLayout paddingBottom="30" paddingTop="20">
+            <Label class="text-center page-title" text="View Daily Patient Vital Signs Recordings"></Label>
+        </StackLayout>
+        <StackLayout>
+            <GridLayout rows="*,*" columns="*,6*,6*,*">
+                <Label text="Reading Date" col="1" row="0"></Label>
+                <Label [text]="currentDate" col="2" row="0"></Label>
+                <Label text="Reading Time" col="1" row="1"></Label>
+                <Label [text]="currentTime" col="2" row="1"></Label>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout class="hr-light" paddingTop="30" paddingBottom="30"></StackLayout>
+
+        <StackLayout>
+            <GridLayout rows="*,*,*" columns="*,6*,6*,*">
+                <Label text="Reading ID" col="1" row="0"></Label>
+                <Label text="RD123" col="2" row="0"></Label>
+                <Label text="Patient ID" col="1" row="1"></Label>
+                <Label text="P123" col="2" row="1"></Label>
+                <Label text="Medical Practitioner ID" col="1" row="2"></Label>
+                <Label text="MP123" col="2" row="2"></Label>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout class="hr-light" paddingTop="30" paddingBottom="30"></StackLayout>
+
+        <StackLayout>
+            <Label class="text-center" text="Select Patient Name and Surname"></Label>
+            <GridLayout rows="*" columns="*,8*,*" class="picker">
+             <ListPicker row="0" col="1" [items]="pokemons" [selectedIndex]="index" (selectedIndexChange)="selectedIndexChanged($event)" class="p-15 picker"></ListPicker>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout>
+            <Label class="text-center" text="Read Blood Pressure From Wearable Device"></Label>
+        </StackLayout>
+        <StackLayout>
+            <GridLayout rows="*,*" columns="*,8*,6*,6*,*">
+                <Label row="0" col="1" text="Blood Pressure"></Label>
+                <Label row="0" col="2" class="underline" text="Lower"></Label>
+                <Label row="0" col="3" class="underline" text="Higher"></Label>
+                <Label row="1" col="2" text="0mmHg"></Label>
+                <Label row="1" col="3" text="0mmHg"></Label>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout paddingTop="30">
+            <Label class="text-center" text="Read Heart Rate From Wearable Device"></Label>
+        </StackLayout>
+        <StackLayout>
+            <GridLayout rows="*" columns="6*,2*">
+                <TextField
+                        class="input input-field"
+                        returnKeyType="next"
+                        keyboardType="number"
+                        [autocorrect]="false"
+                        autocapitalizationType="none"
+                        col="0" row="0"
+                ></TextField>
+                <Label row="0" col="1" text="bit/sec"></Label>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout paddingTop="30">
+            <Label class="text-center" text="Read Body Temperature From Wearable Device"></Label>
+        </StackLayout>
+        <StackLayout>
+            <GridLayout rows="*" columns="6*,2*">
+                <TextField
+                        class="input input-field"
+                        returnKeyType="next"
+                        keyboardType="number"
+                        [autocorrect]="false"
+                        autocapitalizationType="none"
+                        col="0" row="0"
+                ></TextField>
+                <HtmlView class="bold" [html]="degreeCelcius" col="1" row="0"></HtmlView>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout paddingTop="20">
+            <GridLayout rows="*" columns="*,*,*">
+                <Button class="btn btn-primary" col="1" row="0" text="Submit" ></Button>
+            </GridLayout>
+        </StackLayout>
+    </StackLayout>
+</Scrollview>
