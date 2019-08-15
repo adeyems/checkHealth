@@ -18,6 +18,7 @@ import {PatientDailySignsComponent} from "~/app/patient-daily-signs/patient-dail
 import {CreateHistoryComponent} from "~/app/create-history/create-history.component";
 import {ViewHistoryComponent} from "~/app/view-history/view-history.component";
 import {ReadingsComponent} from "~/app/readings/readings.component";
+import {ViewDailySignsComponent} from "~/app/view-daily-signs/view-daily-signs.component";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -52,7 +53,8 @@ import {ReadingsComponent} from "~/app/readings/readings.component";
         CreateHistoryComponent,
         ViewHistoryComponent,
         ReadingsComponent,
-        DoctorHomeScreenComponent
+        DoctorHomeScreenComponent,
+        ViewDailySignsComponent
     ],
     providers: [],
     schemas: [

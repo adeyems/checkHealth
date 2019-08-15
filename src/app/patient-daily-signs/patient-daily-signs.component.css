@@ -48,10 +48,6 @@ Label {
     font-family: Open Sans, Semibold, serif;
     horizontal-align: left;
 }
-ListPicker {
-    color: #FFFFFF;
-    font-size: 16px;
-}
 
 .underline {
     text-decoration: underline;
@@ -63,4 +59,12 @@ ListPicker {
 
 .text-center {
     font-weight: bold;
+}
+
+.odd {
+    background-color: #D5F2D3;
+}
+
+.even {
+    background-color: #EFEFEF
 }

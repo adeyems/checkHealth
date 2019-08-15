@@ -22,8 +22,8 @@
 
 .input {
     border-color: #226600;
-    width: 90%;
-    height: 200px;
+    width: 70%;
+    height: 80px;
     border-radius: 8%;
     border-width: 5px;
 }
@@ -36,4 +36,38 @@
 .input-error {
     width: 90%;
     color: red;
+}
+
+Label {
+    padding-bottom: 10px;
+}
+
+.module-section-title {
+    color: #AEAEAE;
+    font-size: 12px;
+    font-family: Open Sans, Semibold, serif;
+    horizontal-align: left;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.readings {
+    font-size: 10px;
+}
+
+.text-center {
+    font-weight: bold;
+}
+
+.table-head {
+    background-color: lightgreen;
+}
+.odd {
+    background-color: #D5F2D3;
+}
+
+.even {
+    background-color: #EFEFEF
 }

@@ -34,8 +34,10 @@
              <ListPicker row="0" col="1" [items]="pokemons" [selectedIndex]="index" (selectedIndexChange)="selectedIndexChanged($event)" class="p-15 picker"></ListPicker>
             </GridLayout>
         </StackLayout>
-        <StackLayout>
-            <Label class="text-center" text="Read Blood Pressure From Wearable Device"></Label>
+        <StackLayout paddingTop="20">
+            <GridLayout rows="*" columns="*,8*,*">
+                <Button class="btn btn-primary" col="1" row="0" text="Read Blood Pressure From Wearable Device"></Button>
+            </GridLayout>
         </StackLayout>
         <StackLayout>
             <GridLayout rows="*,*" columns="*,8*,6*,6*,*">
@@ -46,8 +48,10 @@
                 <Label row="1" col="3" text="0mmHg"></Label>
             </GridLayout>
         </StackLayout>
-        <StackLayout paddingTop="30">
-            <Label class="text-center" text="Read Heart Rate From Wearable Device"></Label>
+        <StackLayout paddingTop="20">
+            <GridLayout rows="*" columns="*,8*,*">
+                <Button class="btn btn-primary" col="1" row="0" text="Read Heart Rate From Wearable Device"></Button>
+            </GridLayout>
         </StackLayout>
         <StackLayout>
             <GridLayout rows="*" columns="6*,2*">
@@ -59,11 +63,13 @@
                         autocapitalizationType="none"
                         col="0" row="0"
                 ></TextField>
-                <Label row="0" col="1" text="bit/sec"></Label>
+                <Label row="0" col="1" text="bt/min"></Label>
             </GridLayout>
         </StackLayout>
-        <StackLayout paddingTop="30">
-            <Label class="text-center" text="Read Body Temperature From Wearable Device"></Label>
+        <StackLayout paddingTop="20">
+            <GridLayout rows="*" columns="*,8*,*">
+                <Button class="btn btn-primary" col="1" row="0" text="Read Body Temperature From Wearable Device"></Button>
+            </GridLayout>
         </StackLayout>
         <StackLayout>
             <GridLayout rows="*" columns="6*,2*">

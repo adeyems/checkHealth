@@ -8,9 +8,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ListPicker} from "tns-core-modules/ui/list-picker";
 
 
-let pokemonList = ["Bulbasaur", "Parasect", "Venonat", "Venomoth", "Diglett",
-    "Dugtrio", "Meowth", "Persian", "Psyduck", "Arcanine", "Poliwrath", "Machoke"];
-
+let pokemonList = ["Adeyemo Qudus", "Ade Adenrele", "Ola Global"];
 
 @Component({
     selector: "Home",

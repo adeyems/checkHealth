@@ -12,6 +12,7 @@ import {PatientDailySignsComponent} from "~/app/patient-daily-signs/patient-dail
 import {CreateHistoryComponent} from "~/app/create-history/create-history.component";
 import {ViewHistoryComponent} from "~/app/view-history/view-history.component";
 import {ReadingsComponent} from "~/app/readings/readings.component";
+import {ViewDailySignsComponent} from "~/app/view-daily-signs/view-daily-signs.component";
 
 const routes: Routes = [
     { path: "doctorLogin", component: DoctorLoginComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
     { path: "createHistory", component:  CreateHistoryComponent},
     { path: "viewHistory", component:  ViewHistoryComponent},
     { path: "readings", component: ReadingsComponent},
+    { path: "viewDailySigns", component: ViewDailySignsComponent},
     { path: "", redirectTo: "/login", pathMatch: "full" },
 ];
 
