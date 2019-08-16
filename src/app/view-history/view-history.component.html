@@ -1,12 +1,16 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    <GridLayout rows="*" columns="2*,5*,*">
+        <Image src="res://icon" class="page-icon" row="0" verticalAlignment="center" col="0" stretch="aspectFit"></Image>
+        <Image src="res://account" class="account-icon" row="0" verticalAlignment="center" col="2" stretch="aspectFill" (tap)="onLogout()"></Image>
+        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    </GridLayout>
 </ActionBar>
-<Scrollview>
-    <StackLayout  class="page ">
-        <StackLayout paddingBottom="30" paddingTop="20">
-            <Label class="text-center page-title" textWrap="true" text="View History of Patient Vital Signs of Recording Records"></Label>
-        </StackLayout>
 
+<Scrollview>
+    <StackLayout  class="page">
+        <StackLayout paddingBottom="30" paddingTop="20">
+            <Label class="text-center title" textWrap="true" text="View History of Patient Vital Signs of Recording Records"></Label>
+        </StackLayout>
         <StackLayout>
             <Label class="text-center" text="Select Patient Name and Surname"></Label>
             <GridLayout rows="*" columns="*,8*,*" class="picker">
@@ -26,7 +30,7 @@
         <StackLayout class="hr-light" paddingTop="30" paddingBottom="30"></StackLayout>
 
         <StackLayout>
-            <GridLayout columns="*,*,*,*,*,*,*,*" rows="*,*,*,*,*,*">
+            <GridLayout columns="*,*,*,*,*,*,*,*" rows="*,*,*,*,*,*" class="table">
                 <Label row="0" class="table-head" col="0" text=""></Label>
                 <Label row="0" class="table-head" col="1" text="Monday"></Label>
                 <Label row="0" class="table-head" col="2" text="Tuesday"></Label>

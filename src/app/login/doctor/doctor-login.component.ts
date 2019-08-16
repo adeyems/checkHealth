@@ -63,4 +63,8 @@ export class DoctorLoginComponent implements OnInit {
         this.passwordEl.nativeElement.focus();
         this.passwordEl.nativeElement.dismissSoftInput();
     }
+
+    goToForgotPassword() {
+        this.router.navigate(["forgotPassword"])
+            .catch()    }
 }

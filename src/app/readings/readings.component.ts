@@ -57,4 +57,8 @@ export class ReadingsComponent implements OnInit {
     goToBrowseRelevantInfo() {
         this.router.navigate(["relevantInfo"]).then();
     }
+
+    onLogout() {
+        this.authService.logout();
+    }
 }

@@ -1,21 +1,24 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    <GridLayout rows="*" columns="2*,5*,*">
+        <Image src="res://icon" class="page-icon" row="0" verticalAlignment="center" col="0" stretch="aspectFit"></Image>
+        <Image src="res://account" class="account-icon" row="0" verticalAlignment="center" col="2" stretch="aspectFill" (tap)="onLogout()"></Image>
+        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    </GridLayout>
 </ActionBar>
-
 <StackLayout  class="page ">
-    <StackLayout paddingBottom="50" paddingTop="20">
-        <Label class="text-center page-title" text="Browse Relevant Information About Asthma"></Label>
-    </StackLayout>
-    <StackLayout paddingBottom="30">
-        <Label class="btn btn-primary" text="Document Title1"></Label>
+    <StackLayout paddingBottom="30" paddingTop="20">
+        <Label class="text-center title" textWrap="true" text="Browse Relevant Information About Asthma"></Label>
     </StackLayout>
     <StackLayout>
-        <Label class="btn btn-primary" text="Document Title2"></Label>
+        <Label class="btn btn-black text-center" text="Document Title1"></Label>
     </StackLayout>
     <StackLayout>
-        <Label class="btn btn-primary" text="Document Title3"></Label>
+        <Label class="btn btn-black text-center" text="Document Title2"></Label>
     </StackLayout>
     <StackLayout>
-        <Label class="btn btn-primary" text="Document Title4"></Label>
+        <Label class="btn btn-black text-center" text="Document Title3"></Label>
+    </StackLayout>
+    <StackLayout>
+        <Label class="btn btn-black text-center" text="Document Title4"></Label>
     </StackLayout>
 </StackLayout>

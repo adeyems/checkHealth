@@ -86,4 +86,8 @@ export class RelevantInfoComponent implements OnInit {
         this.passwordEl.nativeElement.focus();
         this.passwordEl.nativeElement.dismissSoftInput();
     }
+
+    onLogout() {
+        this.authService.logout();
+    }
 }

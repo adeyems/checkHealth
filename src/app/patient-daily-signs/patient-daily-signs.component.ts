@@ -49,4 +49,8 @@ export class PatientDailySignsComponent implements OnInit {
     goToPatientHome() {
 
     }
+
+    onLogout() {
+        this.authService.logout();
+    }
 }

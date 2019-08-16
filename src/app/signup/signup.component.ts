@@ -27,6 +27,7 @@ export class SignupComponent implements OnInit {
     @ViewChild("passwordEl", {static: false}) passwordEl: ElementRef<TextField>;
     @ViewChild("confirmPasswordEl", {static: false}) confirmPasswordEl: ElementRef<TextField>;
     public currentUser: string;
+    phone: "+353";
 
     constructor(
         private router: RouterExtensions,

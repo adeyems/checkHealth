@@ -92,4 +92,8 @@ export class PatientLoginComponent implements OnInit {
         this.router.navigate(["patientSignup"]).then()
     }
 
+    goToForgotPassword() {
+        this.router.navigate(["forgotPassword"])
+            .catch()    }
+
 }

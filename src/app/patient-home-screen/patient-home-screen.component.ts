@@ -94,4 +94,12 @@ export class PatientHomeScreenComponent implements OnInit {
     goToReadings() {
         this.router.navigate(["readings"]).then();
     }
+
+    onLogout() {
+        this.authService.logout();
+    }
+
+    goToPatientDailySigns() {
+        this.router.navigate(["daily-signs"]).then();
+    }
 }

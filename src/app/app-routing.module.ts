@@ -13,6 +13,7 @@ import {CreateHistoryComponent} from "~/app/create-history/create-history.compon
 import {ViewHistoryComponent} from "~/app/view-history/view-history.component";
 import {ReadingsComponent} from "~/app/readings/readings.component";
 import {ViewDailySignsComponent} from "~/app/view-daily-signs/view-daily-signs.component";
+import {ForgotPasswordComponent} from "~/app/password/forgot-password.component";
 
 const routes: Routes = [
     { path: "doctorLogin", component: DoctorLoginComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
     { path: "viewHistory", component:  ViewHistoryComponent},
     { path: "readings", component: ReadingsComponent},
     { path: "viewDailySigns", component: ViewDailySignsComponent},
+    { path: "forgotPassword", component: ForgotPasswordComponent},
     { path: "", redirectTo: "/login", pathMatch: "full" },
 ];
 

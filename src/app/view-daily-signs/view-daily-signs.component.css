@@ -21,7 +21,7 @@
 }
 
 .input {
-    border-color: #226600;
+    border-color: #000000;
     width: 70%;
     height: 80px;
     border-radius: 8%;
@@ -71,4 +71,10 @@ Label {
 
 .even {
     background-color: #EFEFEF
+}
+
+.btn-black{
+    color: #F5F5F5;
+    background-color: #000000;
+    border-width: 3px;
 }

@@ -92,6 +92,14 @@ export class DoctorHomeScreenComponent implements OnInit {
     }
 
     goToPatientDailySigns(){
-        this.router.navigate(["daily-signs"]).catch();
+        this.router.navigate(["viewDailySigns"]).catch();
+    }
+
+    goToHistory() {
+        this.router.navigate(["viewHistory"]).catch();
+    }
+
+    onLogout() {
+        this.authService.logout();
     }
 }

@@ -59,4 +59,8 @@ export class ViewHistoryComponent implements OnInit {
     goToBrowseRelevantInfo() {
         this.router.navigate(["relevantInfo"]).then();
     }
+
+    onLogout() {
+        this.authService.logout();
+    }
 }

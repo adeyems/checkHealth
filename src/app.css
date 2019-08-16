@@ -37,14 +37,30 @@ refer to http://docs.nativescript.org/ui/theme.
     font-size: 5%;
 }
 
-.page-title {
-    font-size: 20%;
-}
-
 .small {
     font-family: Consolas, Monaco, monospace;
     font-size: 5px;
 }
 Label {
-    font-size: 12px;
+    font-size: 15px;
 }
+
+.action-bar-title {
+    font-size: 15px;
+}
+
+.btn-black{
+    color: #F5F5F5;
+    background-color: #000000;
+    width: 800px;
+    height: 200px;
+    padding: 10px 31px 10px 31px;
+    border-width: 3px;
+}
+
+.title {
+    font-size: 23%;
+    color: black;
+    font-family: "Al Bayan";
+}
+

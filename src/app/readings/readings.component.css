@@ -62,12 +62,17 @@ Label {
 }
 
 .table-head {
-    background-color: lightgreen;
+    background-color: black;
+    color: #F5F5F5;
+    font-size: 12%;
 }
 .odd {
-    background-color: #D5F2D3;
+    background-color: #F5F5F5;
+    color: black;
+    font-size: 12%;
 }
 
 .even {
-    background-color: #EFEFEF
+    background-color: #EFEFEF;
+    font-size: 12%;
 }

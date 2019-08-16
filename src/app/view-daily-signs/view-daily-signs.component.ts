@@ -53,4 +53,8 @@ export class ViewDailySignsComponent implements OnInit {
     goToHistory() {
         this.router.navigate(["createHistory"]).then()
     }
+
+    onLogout() {
+        this.authService.logout();
+    }
 }

@@ -1,23 +1,16 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    <GridLayout rows="*" columns="2*,5*,*">
+        <Image src="res://icon" class="page-icon" row="0" verticalAlignment="center" col="0" stretch="aspectFit"></Image>
+        <Image src="res://account" class="account-icon" row="0" verticalAlignment="center" col="2" stretch="aspectFill" (tap)="onLogout()"></Image>
+        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    </GridLayout>
 </ActionBar>
+
 <Scrollview>
     <StackLayout  class="page ">
         <StackLayout paddingBottom="30" paddingTop="20">
-            <Label class="text-center page-title" textWrap="true" text="Create End of Week History Record of Readings"></Label>
+            <Label class="text-center title" textWrap="true" text="Create End of Week History Record of Readings"></Label>
         </StackLayout>
-        <StackLayout>
-            <GridLayout rows="*,*,*" columns="*,6*,6*,*">
-                <Label text="History ID" col="1" row="0"></Label>
-                <Label text="H123" col="2" row="0"></Label>
-                <Label text="Patient ID" col="1" row="1" ></Label>
-                <Label text="P123" col="2" row="1" ></Label>
-                <Label text="Medical Practitioner ID" col="1" row="2"></Label>
-                <Label text="MP123" col="2" row="2"></Label>
-            </GridLayout>
-        </StackLayout>
-
-        <StackLayout class="hr-light" paddingTop="30" paddingBottom="30"></StackLayout>
 
         <StackLayout>
             <GridLayout rows="*,*" columns="*,6*,6*,*">
@@ -96,7 +89,7 @@
         </StackLayout>
         <StackLayout paddingTop="20">
             <GridLayout rows="*" columns="*,2*,*">
-                <Button class="btn btn-primary" col="1" row="0" text="Create History Record" ></Button>
+                <Button class="btn btn-black" col="1" row="0" text="Create History Record" ></Button>
             </GridLayout>
         </StackLayout>
     </StackLayout>
