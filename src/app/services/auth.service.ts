@@ -65,12 +65,12 @@ export class AuthService {
                 tap(resData => {
                     if (resData && resData.idToken) {
                         alert("Your Account was created successfully").catch();
-                        this.router.navigate(['patientLogin'])
-                        /*return this.createNewUser(name, surname, phone, email, password, resData)
+                        this.router.navigate(['patientLogin']);
+                        return this.createNewUser(resData, name, surname, phone, email, password)
                             .subscribe( resData => {
                                 console.log(resData);
                                 alert("Your Account was created successfully").catch();
-                            })*/
+                            })
                     }
                 })
             );
@@ -94,6 +94,16 @@ export class AuthService {
                     }
                 })
             );
+    }
+
+    checkUserType(email: string, userType: 'patients' | 'medical-practitioner') {
+        return this.http.get(`${AuthService.Config.FIREBASE_URL}/${userType}.json`)
+        .pipe(
+            catchError(errorRes => {
+                AuthService.handleError(errorRes.error.error.message);
+                return throwError(errorRes);
+            })
+        );
     }
 
     logout() {
@@ -160,11 +170,11 @@ export class AuthService {
         }
     }
 
-    public createNewUser() {
-        const newPatient = new PatientModel("wqdewfretgryhtuyrtgerfedasw", "name", "surname", "phone", "email", new Date());
-       // const newPatient = new PatientModel(resData.localId, name, surname, phone, email, new Date());
+    public createNewUser(resData, name, surname, phone, email, password) {
+        // const newPatient = new PatientModel("wqdewfretgryhtuyrtgerfedasw", "name", "surname", "phone", "email", new Date());
+       const newPatient = new PatientModel(resData.localId, name, surname, phone, email, new Date());
         return this.http.post(
-            `${AuthService.Config.FIREBASE_URL}/data.json`, {newPatient}
+            `${AuthService.Config.FIREBASE_URL}/patients.json`, newPatient
         ).pipe(
             catchError(errorRes => {
                 console.log(errorRes);

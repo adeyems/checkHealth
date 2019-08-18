@@ -30,7 +30,6 @@ export class ForgotPasswordComponent implements OnInit {
                 validators: [Validators.required, Validators.email]
             })
         });
-
     }
 
     onDone() {
