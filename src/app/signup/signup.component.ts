@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
     passwordControlIsValid = true;
     confirmPasswordControlIsValid = true;
     isLoading = false;
+    phone: "+353";
     @ViewChild("nameEl", {static: false}) nameEl: ElementRef<TextField>;
     @ViewChild("surnameEl", {static: false}) surnameEl: ElementRef<TextField>;
     @ViewChild("phoneEl", {static: false}) phoneEl: ElementRef<TextField>;
@@ -27,7 +28,7 @@ export class SignupComponent implements OnInit {
     @ViewChild("passwordEl", {static: false}) passwordEl: ElementRef<TextField>;
     @ViewChild("confirmPasswordEl", {static: false}) confirmPasswordEl: ElementRef<TextField>;
     public currentUser: string;
-    phone: "+353";
+
 
     constructor(
         private router: RouterExtensions,
