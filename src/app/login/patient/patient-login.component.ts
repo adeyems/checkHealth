@@ -81,14 +81,13 @@ export class PatientLoginComponent implements OnInit {
                 let matchFound: boolean = false;
                 for (let i = 0; i < keys.length; i++) {
                     let key = keys[i];
-                    // console.log('????????',keys[i]);
                     if (response[key].email == email) {
                         matchFound = true;
                         break;
                     }
                 }
-                // console.log('@@@@@@@',matchFound);
                 if (!matchFound) {
+                    this.isLoading = false;
                     alert('User not recognized!!!');
                     return;
                 }

@@ -1,0 +1,55 @@
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { catchError } from "rxjs/operators";
+import { throwError } from "rxjs";
+import { alert } from "tns-core-modules/ui/dialogs/dialogs";
+
+@Injectable({ providedIn: 'root' })
+export class DataService {
+
+    static Config = {
+        SIGNUP_URL: "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAqTK1rEZ_-krBUwEwkzMNwAenJxiiCnMY",
+        SIGNIN_URL: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAqTK1rEZ_-krBUwEwkzMNwAenJxiiCnMY",
+        FIREBASE_API_KEY: "AIzaSyAqTK1rEZ_-krBUwEwkzMNwAenJxiiCnMY",
+        FIREBASE_URL:"https://checkhealth-51468.firebaseio.com"
+    };
+
+    constructor(
+        private http: HttpClient
+    ) {}
+
+    public fetchMedicalPractitioners(userType: 'patients' | 'medical-practitioner') {
+        return this.http.get(`${DataService.Config.FIREBASE_URL}/${userType}.json`)
+        .pipe(
+            catchError(errorRes => {
+                DataService.handleError(errorRes.error.error.message);
+                return throwError(errorRes);
+            })
+        );
+    }
+
+    public createReadingRecord(vitalSigns) {
+        return this.http.post(
+            `${DataService.Config.FIREBASE_URL}/daily-reading-records.json`, vitalSigns
+        ).pipe(
+            catchError(errorRes => {
+                console.log(errorRes);
+                DataService.handleError(errorRes.error.error.message);
+                return throwError(errorRes);
+            })
+        );
+    }
+
+    private static handleError(errorMessage: string) {
+        switch (errorMessage) {
+            case 'EMAIL_EXISTS':
+                alert('This email address exists already!').catch( error => console.log(error));
+                break;
+            case 'INVALID_PASSWORD':
+                alert('Your password is invalid!').catch( error => console.log(error));
+                break;
+            default:
+                alert('Unable to process your request!.').catch( error => console.log(error));
+        }
+    }
+}

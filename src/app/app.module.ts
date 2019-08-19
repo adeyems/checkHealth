@@ -20,6 +20,7 @@ import {ViewHistoryComponent} from "~/app/view-history/view-history.component";
 import {ReadingsComponent} from "~/app/readings/readings.component";
 import {ViewDailySignsComponent} from "~/app/view-daily-signs/view-daily-signs.component";
 import {ForgotPasswordComponent} from "~/app/password/forgot-password.component";
+import { SelectListComponent } from "./modals/select-list/select-list.component";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -39,7 +40,8 @@ import {ForgotPasswordComponent} from "~/app/password/forgot-password.component"
         NativeScriptHttpClientModule,
     ],
     entryComponents: [
-        AppComponent
+        AppComponent,
+        SelectListComponent
     ],
     declarations: [
         AppComponent,
@@ -56,7 +58,8 @@ import {ForgotPasswordComponent} from "~/app/password/forgot-password.component"
         ReadingsComponent,
         DoctorHomeScreenComponent,
         ViewDailySignsComponent,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        SelectListComponent
     ],
     providers: [],
     schemas: [

@@ -13,10 +13,8 @@ import {
 } from 'tns-core-modules/application-settings';
 
 import { UserModel} from "~/app/models/user.model";
-import { DoctorModel} from "~/app/models/doctor.model";
 import {VerticalAlignment} from "tns-core-modules/ui/enums";
 import stretch = VerticalAlignment.stretch;
-import {error} from "tns-core-modules/trace";
 import {PatientModel} from "~/app/models/patient.model";
 
 interface AuthResponseData {
@@ -151,7 +149,7 @@ export class AuthService {
         expiresIn: number
     ) {
         const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-        const user = new UserModel(email, userId, token, expirationDate);
+        const user = new UserModel(userId, email, token, expirationDate);
         setString('userData', JSON.stringify(user));
         this.autoLogout(user.timeToExpiry);
         this._user.next(user);
@@ -183,7 +181,6 @@ export class AuthService {
             }),
             tap(resData => {
                 if (resData ) {
-                    console.log(resData);
                    return resData;
                 }
             })

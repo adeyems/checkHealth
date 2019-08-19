@@ -1,0 +1,8 @@
+<ScrollView height="150" width="300">
+    <StackLayout>
+        <Label [text]="boxName" class="box-item title"></Label>
+        <Label *ngFor="let boxItem of boxItems;let i = index"
+            [text]="boxItem.value" class="box-item"
+            [class.selected]="i === selectedIndex" (tap)="onSelectItem(i)"></Label>
+    </StackLayout>
+</ScrollView>

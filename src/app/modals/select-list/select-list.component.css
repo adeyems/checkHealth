@@ -1,0 +1,10 @@
+.box-item {
+    padding: 20 10;
+    font-size: 15;
+}
+.box-item.title {
+    color: #b0b0b0;
+}
+.box-item.selected {
+    font-weight: 700;
+}

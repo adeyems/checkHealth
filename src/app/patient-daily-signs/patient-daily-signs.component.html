@@ -22,11 +22,17 @@
         <StackLayout class="hr-light" paddingTop="30" paddingBottom="30"></StackLayout>
 
         <StackLayout>
-            <Label class="text-center" text="Select Patient Name and Surname"></Label>
-            <GridLayout rows="*" columns="*,8*,*" class="picker">
-             <ListPicker row="0" col="1" [items]="pokemons" [selectedIndex]="index" (selectedIndexChange)="selectedIndexChanged($event)" class="p-15 picker"></ListPicker>
-            </GridLayout>
+            <Label text="Select Medical Practitioner Name & Surname" textWrap="true" class="text-deep-bold"></Label>
+            <TextField isUserInteractionEnabled="false" [text]="setSelectedText()"
+                (tap)="openMedicalPractitionerBox()"></TextField>
+            <Label [text]="errorText" *ngIf="errorText" color="red"></Label>
         </StackLayout>
+        <!-- <StackLayout>
+            <Label class="text-center" text="Select Medical Practitioner Name & Surname"></Label>
+            <GridLayout rows="*" columns="*,8*,*" class="picker">
+             <ListPicker row="0" col="1" [items]="medicalPractitioners" [selectedIndex]="index" (selectedIndexChange)="selectedIndexChanged($event)" class="p-15 picker"></ListPicker>
+            </GridLayout>
+        </StackLayout> -->
         <StackLayout paddingTop="20">
             <GridLayout rows="*" columns="*,8*,*">
                 <Button class="btn btn-black" col="1" row="0" text="Read Blood Pressure From Wearable Device"></Button>
@@ -55,6 +61,7 @@
                         [autocorrect]="false"
                         autocapitalizationType="none"
                         col="0" row="0"
+                        [(ngModel)]="vitalSignsModel.heartRate"
                 ></TextField>
                 <Label row="0" col="1" text="bt/min"></Label>
             </GridLayout>
@@ -73,13 +80,14 @@
                         [autocorrect]="false"
                         autocapitalizationType="none"
                         col="0" row="0"
+                        [(ngModel)]="vitalSignsModel.bodyTemperature"
                 ></TextField>
                 <HtmlView class="bold" [html]="degreeCelcius" col="1" row="0"></HtmlView>
             </GridLayout>
         </StackLayout>
         <StackLayout paddingTop="20">
             <GridLayout rows="*" columns="*,*,*">
-                <Button class="btn btn-black" col="1" row="0" text="Submit" ></Button>
+                <Button class="btn btn-black" col="1" row="0" text="Submit" (tap)="onCreateReadingRecord()"></Button>
             </GridLayout>
         </StackLayout>
     </StackLayout>
