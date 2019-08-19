@@ -21,7 +21,6 @@ export class PatientDailySignsComponent implements OnInit {
     currentTime: string;
     degreeCelcius = "<sup>o</sup>C";
 
-    public patientId: string;
     public medicalPractitioners: any[];
     selectedIndex: number = -1;
     public errorText: string;
@@ -51,8 +50,7 @@ export class PatientDailySignsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.patientId = JSON.parse(getString('userData'))['id'];
-        console.log(this.patientId);
+        this.vitalSignsModel.patientId = JSON.parse(getString('userData'))['id'];
         this.dataService.fetchMedicalPractitioners('medical-practitioner')
             .subscribe(response => {
                 for (let key in response) {
