@@ -35,15 +35,40 @@
         </StackLayout>
         <StackLayout>
             <FlexboxLayout width="100%" paddingLeft="10" paddingRight="10" alignItems="center">
-                <Label text="Blood Pressure" width="50%"></Label>
-                <FlexboxLayout borderRadius="5" borderWidth="1" borderColor="#ddd">
+                <Label text="Blood Pressure" width="30%"></Label>
+                <FlexboxLayout borderRadius="5" borderWidth="1" borderColor="#ddd" padding="10">
                     <StackLayout paddingLeft="5" paddingright="5">
                         <Label class="underline" text="Lower" paddingBottom="8"></Label>
-                        <Label text="0 mmHg"></Label>
+                        <FLexboxLayout height="45" alignItems="center">
+                                <TextField
+                                class="input input-field"
+                                returnKeyType="next"
+                                keyboardType="number"
+                                [autocorrect]="false"
+                                autocapitalizationType="none"
+                                width="50"
+                                [(ngModel)]="vitalSignsModel.bloodPressure.lower"
+                                isUserInteractionEnabled="false"
+                            ></TextField>
+                            <Label text=" mmHg" textWrap="true"></Label>
+                        </FLexboxLayout>
                     </StackLayout>
                     <StackLayout paddingLeft="5" paddingright="5">
                         <Label class="underline" text="Higher" paddingBottom="8"></Label>
-                        <Label text="0 mmHg"></Label>
+                        <FLexboxLayout height="45" alignItems="center">
+                                <TextField
+                                class="input input-field"
+                                returnKeyType="next"
+                                keyboardType="number"
+                                [autocorrect]="false"
+                                autocapitalizationType="none"
+                                width="50"
+                                [(ngModel)]="vitalSignsModel.bloodPressure.higher"
+                                isUserInteractionEnabled="false"
+                            ></TextField>
+                            <Label text=" mmHg" textWrap="true"></Label>
+                        </FLexboxLayout>
+
                     </StackLayout>
                 </FlexboxLayout>
             </FlexboxLayout>
@@ -64,13 +89,14 @@
                         autocapitalizationType="none"
                         width="20%"
                         [(ngModel)]="vitalSignsModel.heartRate"
+                        isUserInteractionEnabled="false"
                 ></TextField>
                 <Label text="bt/min"></Label>
             </FlexboxLayout>
         </StackLayout>
         <StackLayout paddingTop="20">
             <GridLayout rows="*" columns="*,8*,*">
-                <Button class="btn btn-black" col="1" row="0" text="Read Body Temperature From Wearable Device" fontSize="11"></Button>
+                <Button class="btn btn-black" col="1" row="0" text="Input Body Temperature From Temperature Measurement Device" fontSize="11"></Button>
             </GridLayout>
         </StackLayout>
         <StackLayout>
@@ -78,7 +104,7 @@
                 <Label text="Body temperature" textWrap="true" width="50%"></Label>
                 <TextField
                         class="input input-field"
-                        returnKeyType="next"
+                        returnKeyType="done"
                         keyboardType="number"
                         [autocorrect]="false"
                         autocapitalizationType="none"

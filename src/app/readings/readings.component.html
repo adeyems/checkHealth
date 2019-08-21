@@ -23,12 +23,13 @@
 
         <StackLayout class="hr-light" paddingTop="30" paddingBottom="30"></StackLayout>
 
-        <StackLayout>
-            <Label class="text-center" text="Select Patient Name and Surname"></Label>
-            <GridLayout rows="*" columns="*,8*,*" class="picker">
-                <ListPicker row="0" col="1" [items]="pokemons" [selectedIndex]="index" (selectedIndexChange)="selectedIndexChanged($event)" class="p-15 picker"></ListPicker>
-            </GridLayout>
-        </StackLayout>
+        <FlexboxLayout justifyContent="center" alignItems="center" flexDirection="column" width="100%">
+            <Label text="Select Medical Practitioner Name & Surname" textWrap="true"
+                class="text-deep-bold" textAlignment="center"></Label>
+            <TextField isUserInteractionEnabled="false" [text]="setSelectedText()"
+                (tap)="openMedicalPractitionerBox()" class="input" width="50%"></TextField>
+            <Label [text]="errorText" *ngIf="errorText" color="red"></Label>
+        </FlexboxLayout>
         <StackLayout>
             <GridLayout columns="*,*,*,*,*,*,*,*" rows="*,*,*,*,*,*">
                 <Label row="0" class="table-head" col="0" text=""></Label>

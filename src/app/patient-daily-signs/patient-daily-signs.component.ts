@@ -7,9 +7,6 @@ import { DataService } from "../services/data.service";
 import { SelectListComponent } from "../modals/select-list/select-list.component";
 import { getString } from "tns-core-modules/application-settings/application-settings";
 
-
-let pokemonList = ["Adeyemo Qudus", "Ade Adenrele", "Ola Global"];
-
 @Component({
     selector: "Home",
     moduleId: module.id,
@@ -28,8 +25,8 @@ export class PatientDailySignsComponent implements OnInit {
     vitalSignsModel = {
         medicalPractitionerId: "",
         bloodPressure: {
-            lower: "",
-            higher: ""
+            lower: 0,
+            higher: 0
         },
         heartRate: "",
         bodyTemperature: ""
@@ -42,21 +39,18 @@ export class PatientDailySignsComponent implements OnInit {
         private dataService: DataService,
         protected modalDialog: ModalDialogService,
         protected vcRef: ViewContainerRef,
-    ) {
-        this.medicalPractitioners = [];
-        // for (let i = 0; i < pokemonList.length; i++) {
-        //     this.medicalPractitioners.push(pokemonList[i]);
-        // }
-    }
+    ) { }
 
     ngOnInit() {
+        this.medicalPractitioners = [];
         this.patientId = JSON.parse(getString('userData'))['id'];
-        this.dataService.fetchMedicalPractitioners('medical-practitioners')
-            .subscribe(response => {
-                for (let key in response) {
-                    this.medicalPractitioners.push({id: key, value:`${response[key][Object.keys(response[key])[0]].name} ${response[key][Object.keys(response[key])[0]].surname}`});
-                }
-            });
+        this.vitalSignsModel.bloodPressure.lower = 50;
+        this.vitalSignsModel.bloodPressure.higher = 120;
+        this.dataService.fetchMedicalPractitioners('medical-practitioners').subscribe(response => {
+            for (let key in response) {
+                this.medicalPractitioners.push({id: key, value:`${response[key][Object.keys(response[key])[0]].name} ${response[key][Object.keys(response[key])[0]].surname}`});
+            }
+        });
         const today = new Date();
         this.currentDate = today.toDateString();
         this.currentTime = (today.toTimeString()).split(" ")[0];
