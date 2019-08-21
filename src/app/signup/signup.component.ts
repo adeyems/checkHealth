@@ -147,11 +147,4 @@ export class SignupComponent implements OnInit {
         this.passwordEl.nativeElement.dismissSoftInput();
     }
 
-    // newUser(){
-    //     console.log("clicked");
-    //     this.authService.createNewUser().subscribe(
-    //         resData => {
-    //             console.log(resData);
-    //         });
-    // }
 }

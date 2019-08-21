@@ -22,10 +22,10 @@
 
 .input {
     border-color: #226600;
-    width: 70%;
-    height: 80px;
-    border-radius: 8%;
-    border-width: 5px;
+    height: 45;
+    border-radius: 3;
+    border-width: 1;
+    border-color: #ddd;
 }
 
 .input.ng-invalid.ng-touched {

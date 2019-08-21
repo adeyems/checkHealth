@@ -21,11 +21,11 @@ export class PatientDailySignsComponent implements OnInit {
     currentTime: string;
     degreeCelcius = "<sup>o</sup>C";
 
-    public medicalPractitioners: any[];
+    medicalPractitioners: any[];
     selectedIndex: number = -1;
-    public errorText: string;
-    public vitalSignsModel = {
-        patientId: "",
+    errorText: string;
+    patientId: string;
+    vitalSignsModel = {
         medicalPractitionerId: "",
         bloodPressure: {
             lower: "",
@@ -50,11 +50,11 @@ export class PatientDailySignsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.vitalSignsModel.patientId = JSON.parse(getString('userData'))['id'];
-        this.dataService.fetchMedicalPractitioners('medical-practitioner')
+        this.patientId = JSON.parse(getString('userData'))['id'];
+        this.dataService.fetchMedicalPractitioners('medical-practitioners')
             .subscribe(response => {
                 for (let key in response) {
-                    this.medicalPractitioners.push({id: key, value:`${response[key].name} ${response[key].surname}`});
+                    this.medicalPractitioners.push({id: key, value:`${response[key][Object.keys(response[key])[0]].name} ${response[key][Object.keys(response[key])[0]].surname}`});
                 }
             });
         const today = new Date();
@@ -72,7 +72,7 @@ export class PatientDailySignsComponent implements OnInit {
             this.vitalSignsModel.medicalPractitionerId = this.medicalPractitioners[this.selectedIndex].id;
             return this.medicalPractitioners[this.selectedIndex].value;
         } else {
-            return '';
+            return 'Select';
         }
     }
 
@@ -96,6 +96,10 @@ export class PatientDailySignsComponent implements OnInit {
     }
 
     public onCreateReadingRecord() {
+        if (this.selectedIndex < 0) {
+            this.errorText = 'Please Select a Medical Practitioner!'
+            return;
+        }
         this.dataService.createReadingRecord(this.vitalSignsModel)
             .subscribe(response => {
                 this.router.navigate(['patientHome'], { clearHistory: true }).then();

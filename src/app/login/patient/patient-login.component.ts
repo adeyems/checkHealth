@@ -75,28 +75,18 @@ export class PatientLoginComponent implements OnInit {
         this.emailControlIsValid = true;
         this.passwordControlIsValid = true;
         this.isLoading = true;
-        this.authService.checkUserType(email, 'patients')
+        this.authService.checkUserType('patients')
             .subscribe(response => {
                 const keys = Object.keys(response);
-                let matchFound: boolean = false;
-                for (let i = 0; i < keys.length; i++) {
-                    let key = keys[i];
-                    if (response[key].email == email) {
-                        matchFound = true;
-                        break;
-                    }
-                }
-                if (!matchFound) {
-                    this.isLoading = false;
-                    alert('User not recognized!!!');
-                    return;
-                }
-
-                this.authService.login(email, password).subscribe(
+                this.authService.login(email, password, keys).subscribe(
                     resData => {
                         console.log(resData);
                         this.isLoading = false;
-                        this.router.navigate(['patientHome'], { clearHistory: true }).then();
+                        if (keys.indexOf(resData.localId) > -1) {
+                            this.router.navigate(['patientHome'], { clearHistory: true }).then();
+                        } else {
+                            alert('User not recognized!!!');
+                        }
                     },
                     err => {
                         console.log(err);

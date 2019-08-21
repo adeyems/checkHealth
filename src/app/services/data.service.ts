@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { catchError } from "rxjs/operators";
-import { throwError } from "rxjs";
+import { catchError, take, switchMap } from "rxjs/operators";
+import { throwError, of } from "rxjs";
 import { alert } from "tns-core-modules/ui/dialogs/dialogs";
+import { AuthService } from "./auth.service";
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
@@ -15,10 +16,11 @@ export class DataService {
     };
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private authService: AuthService
     ) {}
 
-    public fetchMedicalPractitioners(userType: 'patients' | 'medical-practitioner') {
+    public fetchMedicalPractitioners(userType: 'patients' | 'medical-practitioners') {
         return this.http.get(`${DataService.Config.FIREBASE_URL}/${userType}.json`)
         .pipe(
             catchError(errorRes => {
@@ -29,13 +31,22 @@ export class DataService {
     }
 
     public createReadingRecord(vitalSigns) {
-        return this.http.post(
-            `${DataService.Config.FIREBASE_URL}/daily-reading-records.json`, vitalSigns
-        ).pipe(
-            catchError(errorRes => {
-                console.log(errorRes);
-                DataService.handleError(errorRes.error.error.message);
-                return throwError(errorRes);
+        return this.authService.user.pipe(
+            take(1),
+            switchMap(
+            currentUser => {
+                if (!currentUser || !currentUser.isAuth) {
+                    return of(null);
+                }
+                return this.http.post(
+                    `${DataService.Config.FIREBASE_URL}/daily-reading-records/${currentUser.id}.json?auth=${currentUser.token}`, vitalSigns
+                ).pipe(
+                    catchError(errorRes => {
+                        console.log(errorRes);
+                        DataService.handleError(errorRes.error.error.message);
+                        return throwError(errorRes);
+                    })
+                );
             })
         );
     }

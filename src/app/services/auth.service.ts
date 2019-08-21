@@ -64,7 +64,7 @@ export class AuthService {
                     if (resData && resData.idToken) {
                         alert("Your Account was created successfully").catch();
                         this.router.navigate(['patientLogin']);
-                        return this.createNewUser(resData, name, surname, phone, email, password)
+                        return this.createNewUser(resData, name, surname, phone, email)
                             .subscribe( resData => {
                                 console.log(resData);
                                 alert("Your Account was created successfully").catch();
@@ -74,7 +74,7 @@ export class AuthService {
             );
     }
 
-    login(email: string, password: string) {
+    login(email: string, password: string, users?: string[]) {
         return this.http
             .post<AuthResponseData>(
                 AuthService.Config.SIGNIN_URL,
@@ -86,15 +86,17 @@ export class AuthService {
                     return throwError(errorRes);
                 }),
                 tap(resData => {
+                    console.log('???????????',resData);
                     if (resData && resData.idToken) {
-                        console.log(resData);
-                        this.handleLogin(email, resData.idToken, resData.localId, 3600)
+                        if (users.indexOf(resData.localId) > -1) {
+                            this.handleLogin(email, resData.idToken, resData.localId, 3600);
+                        }
                     }
                 })
             );
     }
 
-    checkUserType(email: string, userType: 'patients' | 'medical-practitioner') {
+    checkUserType(userType: 'patients' | 'medical-practitioners') {
         return this.http.get(`${AuthService.Config.FIREBASE_URL}/${userType}.json`)
         .pipe(
             catchError(errorRes => {
@@ -168,11 +170,11 @@ export class AuthService {
         }
     }
 
-    public createNewUser(resData, name, surname, phone, email, password) {
+    public createNewUser(resData, name, surname, phone, email) {
         // const newPatient = new PatientModel("wqdewfretgryhtuyrtgerfedasw", "name", "surname", "phone", "email", new Date());
        const newPatient = new PatientModel(resData.localId, name, surname, phone, email, new Date());
         return this.http.post(
-            `${AuthService.Config.FIREBASE_URL}/patients.json`, newPatient
+            `${AuthService.Config.FIREBASE_URL}/medical-practitioners/${resData.localId}.json`, newPatient
         ).pipe(
             catchError(errorRes => {
                 console.log(errorRes);
