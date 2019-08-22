@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TextField} from "tns-core-modules/ui/text-field";
 import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
+import {PasswordValidator} from "~/app/shared/validator";
 
 @Component({
     selector: "Home",
@@ -20,7 +21,7 @@ export class SignupComponent implements OnInit {
     passwordControlIsValid = true;
     confirmPasswordControlIsValid = true;
     isLoading = false;
-    phone: "+353";
+    phone = "+353";
     @ViewChild("nameEl", {static: false}) nameEl: ElementRef<TextField>;
     @ViewChild("surnameEl", {static: false}) surnameEl: ElementRef<TextField>;
     @ViewChild("phoneEl", {static: false}) phoneEl: ElementRef<TextField>;
@@ -35,7 +36,7 @@ export class SignupComponent implements OnInit {
         private authService: AuthService,
         private activatedRoute: ActivatedRoute
     ) {
-        this.activatedRoute.queryParams.subscribe( params => {
+        this.activatedRoute.queryParams.subscribe(params => {
             this.currentUser = params["user"];
             console.log(this.currentUser);
         });
@@ -53,19 +54,19 @@ export class SignupComponent implements OnInit {
             }),
             phone: new FormControl(null, {
                 updateOn: 'blur',
-                validators: [Validators.required, Validators.minLength(14)]
+                validators: [Validators.required, Validators.minLength(13), Validators.maxLength(13)]
             }),
             email: new FormControl(null, {
                 updateOn: 'blur',
-                validators: [Validators.required, Validators.email]
+                validators: [Validators.required, Validators.email, Validators.pattern("(\\W|^)[\\w.+\\-]*@(gmail|yahoo|hotmail|outlook)\\.com(\\W|$)")]
             }),
             password: new FormControl(null, {
                 updateOn: 'blur',
-                validators: [Validators.required, Validators.minLength(8), Validators.pattern("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$")]
+                validators: [Validators.required, Validators.minLength(8), Validators.pattern("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!~`^+=<>?;:{}/\\\\|[\\]@*#\\$%\\^&\\*\\-\\_]).{8,15}$")]
             }),
             confirmPassword: new FormControl(null, {
                 updateOn: 'blur',
-                validators: [Validators.required, Validators.minLength(8)]
+                validators: [Validators.required, Validators.minLength(8), PasswordValidator('password')]
             })
         });
 
@@ -112,7 +113,7 @@ export class SignupComponent implements OnInit {
         const password = this.form.get('password').value;
         const confirmPassword = this.form.get('confirmPassword').value;
 
-        if (password !== confirmPassword ) {
+        if (password !== confirmPassword) {
             alert("Password and Confirm Password do not Match");
             return;
         }
@@ -126,7 +127,7 @@ export class SignupComponent implements OnInit {
             resData => {
                 console.log(resData);
                 this.isLoading = false;
-                this.router.navigate(['patientLogin'], { clearHistory: true }).then();
+                this.router.navigate(['patientLogin'], {clearHistory: true}).then();
 
             },
             err => {
@@ -146,5 +147,4 @@ export class SignupComponent implements OnInit {
         this.confirmPasswordEl.nativeElement.dismissSoftInput();
         this.passwordEl.nativeElement.dismissSoftInput();
     }
-
 }

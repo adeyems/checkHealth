@@ -90,6 +90,7 @@ export class AuthService {
                     if (resData && resData.idToken) {
                         if (users.indexOf(resData.localId) > -1) {
                             this.handleLogin(email, resData.idToken, resData.localId, 3600);
+                            alert('Welcome', )
                         }
                     }
                 })
@@ -174,7 +175,7 @@ export class AuthService {
         // const newPatient = new PatientModel("wqdewfretgryhtuyrtgerfedasw", "name", "surname", "phone", "email", new Date());
        const newPatient = new PatientModel(resData.localId, name, surname, phone, email, new Date());
         return this.http.post(
-            `${AuthService.Config.FIREBASE_URL}/medical-practitioners/${resData.localId}.json`, newPatient
+            `${AuthService.Config.FIREBASE_URL}/patients/${resData.localId}.json`, newPatient
         ).pipe(
             catchError(errorRes => {
                 console.log(errorRes);

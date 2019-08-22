@@ -47,13 +47,12 @@
                     [autocorrect]="false"
                     autocapitalizationType="none"
                     formControlName="phone"
-                    hint="Mobile Number +353 *** **** ***"
                     [text]="phone"
                     #phoneEl
             ></TextField>
             <Label  class="input-error"
                     *ngIf="!phoneControlIsValid"
-                    text="Must be 14+ characters long including country code"
+                    text="Must start with +353 be 13 characters long including country code"
             ></Label>
         </StackLayout>
         <StackLayout>
@@ -70,7 +69,7 @@
             <Label
                     *ngIf="!emailControlIsValid"
                     class="input-error"
-                    text="Please enter a valid email."
+                    text="Please enter a valid email (Gmail, Yahoo, Hotmail and Outlook.)"
             ></Label>
         </StackLayout>
         <StackLayout class="">
@@ -87,7 +86,7 @@
             ></TextField>
             <Label  class="input-error"
                     *ngIf="!passwordControlIsValid"
-                    text="Must be 8+ characters long with uppercase, lowercase, and numbers."
+                    text="Must be 8+ characters long with uppercase, lowercase, number(s) and special character(s)."
             ></Label>
         </StackLayout>
         <StackLayout class="">
