@@ -5,7 +5,6 @@ import {TextField} from "tns-core-modules/ui/text-field";
 import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import {PasswordValidator} from "~/app/shared/validator";
-
 @Component({
     selector: "Home",
     moduleId: module.id,
