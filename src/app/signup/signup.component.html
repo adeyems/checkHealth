@@ -52,7 +52,8 @@
             ></TextField>
             <Label  class="input-error"
                     *ngIf="!phoneControlIsValid"
-                    text="Must start with +353 be 13 characters long including country code"
+                    textWrap="true"
+                    text="Must start with +353 be 13 characters long including country code."
             ></Label>
         </StackLayout>
         <StackLayout>
@@ -86,6 +87,7 @@
             ></TextField>
             <Label  class="input-error"
                     *ngIf="!passwordControlIsValid"
+                    textwrap="true"
                     text="Must be 8+ characters long with uppercase, lowercase, number(s) and special character(s)."
             ></Label>
         </StackLayout>
