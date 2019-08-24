@@ -1,8 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
 import {RouterExtensions, ModalDialogService, ModalDialogOptions} from "nativescript-angular";
+import * as moment from 'moment';
+
 import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
-import {ListPicker} from "tns-core-modules/ui/list-picker";
 import { DataService } from "../services/data.service";
 import { SelectListComponent } from "../modals/select-list/select-list.component";
 import { getString } from "tns-core-modules/application-settings/application-settings";
@@ -29,7 +30,8 @@ export class PatientDailySignsComponent implements OnInit {
             higher: 0
         },
         heartRate: "",
-        bodyTemperature: ""
+        bodyTemperature: "",
+        date: ""
     }
 
 
@@ -54,11 +56,6 @@ export class PatientDailySignsComponent implements OnInit {
         const today = new Date();
         this.currentDate = today.toDateString();
         this.currentTime = (today.toTimeString()).split(" ")[0];
-    }
-
-    public selectedIndexChanged(args) {
-        let picker = <ListPicker>args.object;
-        console.log("picker selection: " + picker.selectedIndex);
     }
 
     setSelectedText() {
@@ -90,14 +87,14 @@ export class PatientDailySignsComponent implements OnInit {
     }
 
     public onCreateReadingRecord() {
+        this.vitalSignsModel.date = moment().format('YYYY-M-D');
         if (this.selectedIndex < 0) {
             this.errorText = 'Please Select a Medical Practitioner!'
             return;
         }
-        this.dataService.createReadingRecord(this.vitalSignsModel)
-            .subscribe(response => {
-                this.router.navigate(['patientHome'], { clearHistory: true }).then();
-            })
+        this.dataService.createReadingRecord(this.vitalSignsModel).subscribe(response => {
+            this.router.navigate(['patientHome'], { clearHistory: true }).then();
+        });
     }
 
     onLogout() {

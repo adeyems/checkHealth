@@ -3,8 +3,7 @@ import {RouterExtensions, ModalDialogService, ModalDialogOptions} from "nativesc
 
 import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
-import * as moment from 'moment'
-import {ListPicker} from "tns-core-modules/ui/list-picker";
+import * as moment from 'moment';
 import { SelectListComponent } from "../modals/select-list/select-list.component";
 import { DataService } from "../services/data.service";
 
@@ -17,19 +16,15 @@ import { DataService } from "../services/data.service";
 export class ReadingsComponent implements OnInit {
     startDate: string;
     endDate: string;
-    index: number;
-    sunday: string;
-    monday: string;
-    tuesday: string;
-    wednesday: string;
-    thursday: string;
-    friday: string;
-    saturday: string;
-    degreeCelcius = "B.T.(<sup>o</sup>C)";
+    degreeCelcius = '<span style="color: white"><sup>o</sup>C</span>';
 
-    medicalPractitioners: any[];
+    medicalPractitioners: any[] = [];
+    medPractitionerId: string;
     selectedIndex: number = -1;
     errorText: string;
+    startHistory: string;
+    historyDates: string[] = [];
+    vitalsHistory = {};
     constructor(
         private router: RouterExtensions,
         private authService: AuthService,
@@ -40,25 +35,27 @@ export class ReadingsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.generateHistoryDate();
+
         this.dataService.fetchMedicalPractitioners('medical-practitioners').subscribe(response => {
             for (let key in response) {
                 this.medicalPractitioners.push({id: key, value:`${response[key][Object.keys(response[key])[0]].name} ${response[key][Object.keys(response[key])[0]].surname}`});
             }
         });
-        this.startDate = moment().subtract(10, "days").format("dddd, MMMM Do YYYY,");
-        this.endDate = moment().subtract(4, "days").format("dddd, MMMM Do YYYY,");
-        this.sunday = moment().subtract(4, "days").format('DD-MM-YY');
-        this.monday = moment().subtract(10, "days").format('DD-MM-YY');
-        this.tuesday = moment().subtract(9, "days").format('DD-MM-YY');
-        this.wednesday = moment().subtract(8, "days").format('DD-MM-YY');
-        this.thursday = moment().subtract(7, "days").format('DD-MM-YY');
-        this.friday = moment().subtract(6, "days").format('DD-MM-YY');
-        this.saturday = moment().subtract(5, "days").format('DD-MM-YY');
+        this.dataService.fetchUserVitalsReading().subscribe(res => {
+            for (let key in res) {
+                if (this.historyDates.indexOf(res[key].date) > -1) {
+                    this.vitalsHistory[res[key].date] = res[key];
+                }
+            }
+        }, err => {
+            alert(err);
+        })
     }
 
     setSelectedText() {
         if (this.selectedIndex > -1) {
-            // this.vitalSignsModel.medicalPractitionerId = this.medicalPractitioners[this.selectedIndex].id;
+            this.medPractitionerId = this.medicalPractitioners[this.selectedIndex].id;
             return this.medicalPractitioners[this.selectedIndex].value;
         } else {
             return 'Select';
@@ -88,7 +85,59 @@ export class ReadingsComponent implements OnInit {
         this.router.navigate(["relevantInfo"]).then();
     }
 
+    onCreateRecordHistory() {
+        if (!this.medPractitionerId) {
+            alert('Please select a medical practitioner');
+            return;
+        }
+        this.dataService.createVitalHistory(this.medPractitionerId, this.historyDates[0], this.vitalsHistory).subscribe(res => {
+            console.log('???????????',res);
+        }, err => {
+            console.log('>>>>>>>>>>>>', err);
+        })
+    }
+
     onLogout() {
         this.authService.logout();
+    }
+
+    private generateHistoryDate() {
+        let currentDay = new Date(new Date().getFullYear(),
+            new Date().getMonth(),
+            new Date().getDate()).getDay();
+
+        switch(currentDay) {
+            case 0:
+                this.startHistory = moment().subtract(6, "days").format('YYYY-M-D');
+                break;
+            case 1:
+                this.startHistory = moment().subtract(7, "days").format('YYYY-M-D');
+                break;
+            case 2:
+                this.startHistory = moment().subtract(8, "days").format('YYYY-M-D');
+                break;
+            case 3:
+                this.startHistory = moment().subtract(9, "days").format('YYYY-M-D');
+                break;
+            case 4:
+                this.startHistory = moment().subtract(10, "days").format('YYYY-M-D');
+                break;
+            case 5:
+                this.startHistory = moment().subtract(11, "days").format('YYYY-M-D');
+                break;
+            case 6:
+                this.startHistory = moment().subtract(12, "days").format('YYYY-M-D');
+                break;
+            default:
+                break;
+        }
+
+        this.historyDates.push(`${this.startHistory}`);
+        for (let i = 1; i < 7; i++) {
+            let temp = moment(this.startHistory, ["YYYY-M-D"]).add(i, 'days').format('YYYY-M-D');
+            this.historyDates.push(`${temp}`);
+        }
+        this.startDate = moment(this.historyDates[0], ["YYYY-M-D"]).format("dddd, MMMM Do YYYY,");
+        this.endDate = moment(this.historyDates[6], ["YYYY-M-D"]).format("dddd, MMMM Do YYYY,");
     }
 }

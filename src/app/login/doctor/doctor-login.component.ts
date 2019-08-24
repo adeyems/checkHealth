@@ -72,11 +72,9 @@ export class DoctorLoginComponent implements OnInit {
         this.isLoading = true;
         this.authService.checkUserType('medical-practitioners')
             .subscribe(response => {
-                console.log('???????????',response);
                 const keys = Object.keys(response);
                 this.authService.login(email, password, keys).subscribe(
                     resData => {
-                        console.log(resData);
                         this.isLoading = false;
                         if (keys.indexOf(resData.localId) > -1) {
                             this.router.navigate(['doctorHome'], { clearHistory: true }).then();

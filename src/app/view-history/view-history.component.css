@@ -21,12 +21,11 @@
 }
 
 .input {
-    border-color: #226600;
-    width: 70%;
-    height: 80px;
-    border-radius: 8%;
-    border-width: 5px;
-}
+    height: 45;
+    border-radius: 3;
+    border-width: 1;
+    border-color: #ddd;
+}s
 
 .input.ng-invalid.ng-touched {
     border-color: red;
@@ -79,4 +78,25 @@ Label {
 
 .table {
 
+}
+.history-box {
+    /* width: 100%; */
+    margin-top: 10;
+}
+.history-item {
+    background-color: whitesmoke;
+    color: black;
+    padding: 10 0;
+    width: 100%;
+}
+.hb-col {
+    width: 20%;
+    align-self: center;
+    text-align: center;
+}
+.history-item.history-date {
+    background-color: ghostwhite;
+    color: black;
+    border-bottom-width: 1;
+    border-bottom-color: #ddd;
 }

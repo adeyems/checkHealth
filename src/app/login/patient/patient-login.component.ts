@@ -80,7 +80,6 @@ export class PatientLoginComponent implements OnInit {
                 const keys = Object.keys(response);
                 this.authService.login(email, password, keys).subscribe(
                     resData => {
-                        console.log(resData);
                         this.isLoading = false;
                         if (keys.indexOf(resData.localId) > -1) {
                             this.router.navigate(['patientHome'], { clearHistory: true }).then();

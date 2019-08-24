@@ -31,6 +31,9 @@ export class DataService {
     }
 
     public createReadingRecord(vitalSigns) {
+        let dateInSecs = new Date(new Date().getFullYear(),
+            new Date().getMonth(),
+            new Date().getDate()).getTime();
         return this.authService.user.pipe(
             take(1),
             switchMap(
@@ -39,7 +42,60 @@ export class DataService {
                     return of(null);
                 }
                 return this.http.post(
-                    `${DataService.Config.FIREBASE_URL}/daily-reading-records/${currentUser.id}.json?auth=${currentUser.token}`, vitalSigns
+                    `${DataService.Config.FIREBASE_URL}/daily-reading-records/${currentUser.id}.json/?auth=${currentUser.token}`, vitalSigns
+                ).pipe(
+                    catchError(errorRes => {
+                        console.log(errorRes);
+                        DataService.handleError(errorRes.error.error.message);
+                        return throwError(errorRes);
+                    })
+                );
+            })
+        );
+    }
+
+    fetchUserVitalsReading() {
+        return this.authService.user.pipe(
+            take(1),
+            switchMap(
+            currentUser => {
+                if (!currentUser || !currentUser.isAuth) {
+                    return of(null);
+                }
+                return this.http.get(
+                    `${DataService.Config.FIREBASE_URL}/daily-reading-records/${currentUser.id}.json?auth=${currentUser.token}`
+                ).pipe(
+                    catchError(errorRes => {
+                        console.log(errorRes);
+                        DataService.handleError(errorRes.error.error.message);
+                        return throwError(errorRes);
+                    })
+                );
+            })
+        );
+    }
+
+    createVitalHistory(medPractId: string, startDate: string, payload) {
+        return this.http.post(
+            `${DataService.Config.FIREBASE_URL}/vitals-history/${medPractId}/${startDate}.json`, payload).pipe(
+                catchError(errorRes => {
+                    console.log(errorRes);
+                    DataService.handleError(errorRes.error.error.message);
+                    return throwError(errorRes);
+                })
+            );
+    }
+
+    fetchVitalHistory(patientId: string, startDate: string) {
+        return this.authService.user.pipe(
+            take(1),
+            switchMap(
+            currentUser => {
+                if (!currentUser || !currentUser.isAuth) {
+                    return of(null);
+                }
+                return this.http.get(
+                    `${DataService.Config.FIREBASE_URL}/vitals-history/${currentUser.id}/${patientId}/${startDate}.json?auth=${currentUser.token}`
                 ).pipe(
                     catchError(errorRes => {
                         console.log(errorRes);
