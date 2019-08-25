@@ -73,10 +73,10 @@
 
     <StackLayout marginTop="10">
       <GridLayout rows="*,*" columns="*,6*,6*,*">
-        <Label text="Start Date of History" col="1" row="0"></Label>
-        <Label [text]="startDate" col="2" row="0" textWrap="true"></Label>
-        <Label text="End of History" col="1" row="1" textWrap="true"></Label>
-        <Label [text]="endDate" col="2" row="1"></Label>
+        <Label textWrap="true" text="Start Date of History" col="1" row="0"></Label>
+        <Label textWrap="true" [text]="startDate" col="2" row="0" textWrap="true"></Label>
+        <Label textWrap="true" text="End of History" col="1" row="1" textWrap="true"></Label>
+        <Label textWrap="true" [text]="endDate" col="2" row="1"></Label>
       </GridLayout>
     </StackLayout>
 
@@ -91,11 +91,11 @@
     </StackLayout>
     <ActivityIndicator [busy]="isLoading && !vitalsHistory"></ActivityIndicator>
     <FlexboxLayout *ngIf="!vitalsHistory && viewMode" justifyContent="center" width="100%">
-      <Label text="No Vitals Record Found!"></Label>
+      <Label textWrap="true" text="No Vitals Record Found!"></Label>
     </FlexboxLayout>
     <StackLayout class="history-box" *ngIf="vitalsHistory">
       <FlexboxLayout class="history-item">
-        <Label text="Date" class="hb-col"></Label>
+        <Label textWrap="true" text="Date" class="hb-col"></Label>
         <Label
           text="Blood Pressure - high (mmHg)"
           class="hb-col"
@@ -111,202 +111,202 @@
           class="hb-col"
           textWrap="true"
         ></Label>
-        <Label text="Body Temp. (°C)" class="hb-col" textWrap="true"></Label>
+        <Label textWrap="true" text="Body Temp. (°C)" class="hb-col" textWrap="true"></Label>
       </FlexboxLayout>
       <FlexboxLayout class="history-item history-date">
         <StackLayout class="hb-col">
-          <Label text="Monday"></Label>
-          <Label [text]="'(' + historyDates[0] + ')'"></Label>
+          <Label textWrap="true" text="Monday"></Label>
+          <Label textWrap="true" [text]="'(' + historyDates[0] + ')'"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[0]]"
             [text]="vitalsHistory[historyDates[0]].bloodPressure.higher"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[0]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[0]]" text="-"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[0]]"
             [text]="vitalsHistory[historyDates[0]].bloodPressure.lower"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[0]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[0]]" text="-"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[0]]"
             [text]="vitalsHistory[historyDates[0]].heartRate"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[0]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[0]]" text="-"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[0]]"
             [text]="vitalsHistory[historyDates[0]].bodyTemperature"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[0]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[0]]" text="-"></Label>
         </StackLayout>
       </FlexboxLayout>
 
       <FlexboxLayout class="history-item history-date">
         <StackLayout class="hb-col">
-          <Label text="Tuesday"></Label>
-          <Label [text]="'(' + historyDates[1] + ')'"></Label>
+          <Label textWrap="true" text="Tuesday"></Label>
+          <Label textWrap="true" [text]="'(' + historyDates[1] + ')'"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[1]]"
             [text]="vitalsHistory[historyDates[1]].bloodPressure.higher"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[1]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[1]]" text="-"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[1]]"
             [text]="vitalsHistory[historyDates[1]].bloodPressure.lower"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[1]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[1]]" text="-"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[1]]"
             [text]="vitalsHistory[historyDates[1]].heartRate"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[1]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[1]]" text="-"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[1]]"
             [text]="vitalsHistory[historyDates[1]].bodyTemperature"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[1]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[1]]" text="-"></Label>
         </StackLayout>
       </FlexboxLayout>
 
       <FlexboxLayout class="history-item history-date">
         <StackLayout class="hb-col">
-          <Label text="Wednesday"></Label>
-          <Label [text]="'(' + historyDates[2] + ')'"></Label>
+          <Label textWrap="true" text="Wednesday"></Label>
+          <Label textWrap="true" [text]="'(' + historyDates[2] + ')'"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[2]]"
             [text]="vitalsHistory[historyDates[2]].bloodPressure.higher"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[2]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[2]]" text="-"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[2]]"
             [text]="vitalsHistory[historyDates[2]].bloodPressure.lower"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[2]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[2]]" text="-"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[2]]"
             [text]="vitalsHistory[historyDates[2]].heartRate"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[2]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[2]]" text="-"></Label>
         </StackLayout>
         <StackLayout class="hb-col">
           <Label
             *ngIf="vitalsHistory[historyDates[2]]"
             [text]="vitalsHistory[historyDates[2]].bodyTemperature"
           ></Label>
-          <Label *ngIf="!vitalsHistory[historyDates[2]]" text="-"></Label>
+          <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[2]]" text="-"></Label>
         </StackLayout>
       </FlexboxLayout>
 
       <FlexboxLayout class="history-item history-date">
         <StackLayout class="hb-col">
-          <Label text="Thursday"></Label>
-          <Label [text]="'(' + historyDates[3] + ')'"></Label>
+          <Label textWrap="true" text="Thursday"></Label>
+          <Label textWrap="true" [text]="'(' + historyDates[3] + ')'"></Label>
         </StackLayout>
         <!-- <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[3]]" [text]="vitalsHistory[historyDates[3]].bloodPressure.higher"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[3]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[3]]" [text]="vitalsHistory[historyDates[3]].bloodPressure.higher"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[3]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[3]]" [text]="vitalsHistory[historyDates[3]].bloodPressure.lower"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[3]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[3]]" [text]="vitalsHistory[historyDates[3]].bloodPressure.lower"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[3]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[3]]" [text]="vitalsHistory[historyDates[3]].heartRate"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[3]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[3]]" [text]="vitalsHistory[historyDates[3]].heartRate"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[3]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[3]]" [text]="vitalsHistory[historyDates[3]].bodyTemperature"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[3]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[3]]" [text]="vitalsHistory[historyDates[3]].bodyTemperature"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[3]]" text="-"></Label>
                 </StackLayout> -->
       </FlexboxLayout>
 
       <FlexboxLayout class="history-item history-date">
         <StackLayout class="hb-col">
-          <Label text="Friday"></Label>
-          <Label [text]="'(' + historyDates[4] + ')'"></Label>
+          <Label textWrap="true" text="Friday"></Label>
+          <Label textWrap="true" [text]="'(' + historyDates[4] + ')'"></Label>
         </StackLayout>
         <!-- <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[4]]" [text]="vitalsHistory[historyDates[4]].bloodPressure.higher"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[4]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[4]]" [text]="vitalsHistory[historyDates[4]].bloodPressure.higher"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[4]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[4]]" [text]="vitalsHistory[historyDates[4]].bloodPressure.lower"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[4]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[4]]" [text]="vitalsHistory[historyDates[4]].bloodPressure.lower"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[4]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[4]]" [text]="vitalsHistory[historyDates[4]].heartRate"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[4]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[4]]" [text]="vitalsHistory[historyDates[4]].heartRate"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[4]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[4]]" [text]="vitalsHistory[historyDates[4]].bodyTemperature"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[4]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[4]]" [text]="vitalsHistory[historyDates[4]].bodyTemperature"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[4]]" text="-"></Label>
                 </StackLayout> -->
       </FlexboxLayout>
 
       <FlexboxLayout class="history-item history-date">
         <StackLayout class="hb-col">
-          <Label text="Saturday"></Label>
-          <Label [text]="'(' + historyDates[5] + ')'"></Label>
+          <Label textWrap="true" text="Saturday"></Label>
+          <Label textWrap="true" [text]="'(' + historyDates[5] + ')'"></Label>
         </StackLayout>
         <!-- <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[5]]" [text]="vitalsHistory[historyDates[5]].bloodPressure.higher"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[5]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[5]]" [text]="vitalsHistory[historyDates[5]].bloodPressure.higher"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[5]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[5]]" [text]="vitalsHistory[historyDates[5]].bloodPressure.lower"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[5]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[5]]" [text]="vitalsHistory[historyDates[5]].bloodPressure.lower"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[5]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[5]]" [text]="vitalsHistory[historyDates[5]].heartRate"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[5]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[5]]" [text]="vitalsHistory[historyDates[5]].heartRate"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[5]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[5]]" [text]="vitalsHistory[historyDates[5]].bodyTemperature"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[5]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[5]]" [text]="vitalsHistory[historyDates[5]].bodyTemperature"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[5]]" text="-"></Label>
                 </StackLayout> -->
       </FlexboxLayout>
 
       <FlexboxLayout class="history-item history-date">
         <StackLayout class="hb-col">
-          <Label text="Sunday"></Label>
-          <Label [text]="'(' + historyDates[6] + ')'"></Label>
+          <Label textWrap="true" text="Sunday"></Label>
+          <Label textWrap="true" [text]="'(' + historyDates[6] + ')'"></Label>
         </StackLayout>
         <!-- <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[6]]" [text]="vitalsHistory[historyDates[6]].bloodPressure.higher"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[6]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[6]]" [text]="vitalsHistory[historyDates[6]].bloodPressure.higher"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[6]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[6]]" [text]="vitalsHistory[historyDates[6]].bloodPressure.lower"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[6]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[6]]" [text]="vitalsHistory[historyDates[6]].bloodPressure.lower"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[6]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[6]]" [text]="vitalsHistory[historyDates[6]].heartRate"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[6]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[6]]" [text]="vitalsHistory[historyDates[6]].heartRate"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[6]]" text="-"></Label>
                 </StackLayout>
                 <StackLayout class="hb-col">
-                    <Label *ngIf="vitalsHistory[historyDates[6]]" [text]="vitalsHistory[historyDates[6]].bodyTemperature"></Label>
-                    <Label *ngIf="!vitalsHistory[historyDates[6]]" text="-"></Label>
+                    <Label textWrap="true" *ngIf="vitalsHistory[historyDates[6]]" [text]="vitalsHistory[historyDates[6]].bodyTemperature"></Label>
+                    <Label textWrap="true" *ngIf="!vitalsHistory[historyDates[6]]" text="-"></Label>
                 </StackLayout> -->
       </FlexboxLayout>
     </StackLayout>

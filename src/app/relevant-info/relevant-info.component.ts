@@ -58,10 +58,10 @@ export class RelevantInfoComponent extends Observable{
         // The file name, and title and description for the notification bar. By default it uses the file name
         // as title, and no description.
         dm.downloadFile(url, function(result,uri) {
-            alert('File Downloading');
             // result is a boolean, if the download was successful, it will return true
             console.log(result);
             // Uri in file:// format of the downloaded file.
+            alert('File Downloaded. Saved in Android/org.nativescript.checkHealth/files/downloads');
             console.log(uri);
             // unregisterBroadcast is used to unregister the broadcast (For example if you just want to
             // download a single file).
