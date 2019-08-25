@@ -1,10 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
 import {RouterExtensions} from "nativescript-angular";
-import {of} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TextField} from "tns-core-modules/ui/text-field";
 import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
+import {getFile} from "tns-core-modules/http";
+import {Folder} from "tns-core-modules/file-system";
+import {Observable} from "tns-core-modules/data/observable";
+import {DownloadManager} from "nativescript-downloadmanager";
 
 @Component({
     selector: "Home",
@@ -12,82 +15,57 @@ import {ActivatedRoute} from "@angular/router";
     templateUrl: "./relevant-info.component.html",
     styleUrls: ["./relevant-info.component.css"]
 })
-export class RelevantInfoComponent implements OnInit {
-    form: FormGroup;
-    emailControlIsValid = true;
-    passwordControlIsValid = true;
-    isLoading = false;
-    @ViewChild("passwordEl", {static: false}) passwordEl: ElementRef<TextField>;
-    @ViewChild("emailEl", {static: false}) emailEl: ElementRef<TextField>;
-    pageTitle: string;
-    public currentUser: string;
+export class RelevantInfoComponent extends Observable{
+    public folderName: string;
+    public fileName: string;
+    public fileTextContent: string;
+
+    public successMessage: string;
+    public writtenContent: string;
+    public isItemVisible: boolean = false;
+
+    public file: File;
+    public folder: Folder;
+
 
     constructor(
         private router: RouterExtensions,
         private authService: AuthService,
         private activatedRoute: ActivatedRoute
     ) {
-        this.activatedRoute.queryParams.subscribe( params => {
-            this.currentUser = params["user"];
-            console.log(this.currentUser);
-        });
+        super();
     }
 
-    ngOnInit() {
-        this.form = new FormGroup({
-            email: new FormControl(null, {
-                updateOn: 'blur',
-                validators: [Validators.required, Validators.email]
-            }),
-            password: new FormControl(null, {
-                updateOn: 'blur',
-                validators: [Validators.required, Validators.minLength(6)]
-            })
-        });
-
-        this.form.get('email').statusChanges.subscribe(status => {
-            this.emailControlIsValid = status === 'VALID';
-        });
-
-        this.form.get('password').statusChanges.subscribe(status => {
-            this.passwordControlIsValid = status === 'VALID';
-        });
-    }
-
-    onSubmit() {
-        this.emailEl.nativeElement.focus();
-        this.passwordEl.nativeElement.focus();
-        this.passwordEl.nativeElement.dismissSoftInput();
-
-        if (!this.form.valid) {
-            return;
-        }
-
-        const email = this.form.get('email').value;
-        const password = this.form.get('password').value;
-        this.form.reset();
-        this.emailControlIsValid = true;
-        this.passwordControlIsValid = true;
-        this.isLoading = true;
-        this.authService.login(email, password).subscribe(
-            resData => {
-                this.isLoading = false;
-                this.router.navigate(['/challenges'], { clearHistory: true }).then();
-            },
-            err => {
-                console.log(err);
-                this.isLoading = false;
-            }
-        );
-    }
-
-    onDone() {
-        this.emailEl.nativeElement.focus();
-        this.passwordEl.nativeElement.focus();
-        this.passwordEl.nativeElement.dismissSoftInput();
-    }
 
     onLogout() {
         this.authService.logout();
+    }
+
+    downloadAsthma() {
+        getFile("https://firebasestorage.googleapis.com/v0/b/checkhealth-51468.appspot.com/o/asthma.pdf?alt=media&token=44e1c71b-308d-4485-bebc-352b0561836a").then((resultFile) => {
+
+        }, (e) => {
+        });
+    }
+
+    public download(url: string) {
+        // Instantiate a Download Manager. The way it's done (it uses a BroadcastReceiver),
+        // it's mean to be kept alive during all the application lifetime. But we can kill unsubscribe
+        let dm = new DownloadManager();
+        // We download a file, in this example a 10mb test file.
+        // This is the Most simple version of doing it.
+        // Aside from that there are optional parameters for. Directory (always inside android/data/yourapp/),
+        // The file name, and title and description for the notification bar. By default it uses the file name
+        // as title, and no description.
+        dm.downloadFile(url, function(result,uri) {
+            alert('File Downloading');
+            // result is a boolean, if the download was successful, it will return true
+            console.log(result);
+            // Uri in file:// format of the downloaded file.
+            console.log(uri);
+            // unregisterBroadcast is used to unregister the broadcast (For example if you just want to
+            // download a single file).
+            dm.unregisterBroadcast();
+        })
     }
 }
