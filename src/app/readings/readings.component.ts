@@ -91,9 +91,10 @@ export class ReadingsComponent implements OnInit {
             return;
         }
         this.dataService.createVitalHistory(this.medPractitionerId, this.historyDates[0], this.vitalsHistory).subscribe(res => {
-            console.log('???????????',res);
+            alert('History Successfully Created!');
+            this.router.navigate(['patientHome']).catch();
         }, err => {
-            console.log('>>>>>>>>>>>>', err);
+            alert(err);
         })
     }
 

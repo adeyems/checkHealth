@@ -1,0 +1,59 @@
+/* Add mobile styles for the component here.  */
+
+.password-login-button {
+    color: #F5F5F5;
+    background-color: #000000;
+    width: 400px;
+    height: 200px;
+    padding: 10px 31px 10px 31px;
+    border-width: 3px;
+}
+
+.admin-label {
+    margin-left: 60%;
+    font-size: 20px;
+    color: #000000;margin-bottom: 20px;
+}
+
+.logo {
+    margin-top: 400px;
+    margin-left: 25%;
+}
+.input {
+    border-radius: 3;
+    border-width: 1;
+    border-color: #ddd;
+}
+
+.input.ng-invalid.ng-touched {
+    border-color: red;
+    color: red;
+}
+
+.input-error {
+    width: 90%;
+    color: red;
+    font-size: 12px;
+}
+
+Label {
+    font-size: 15px;
+}
+
+.link {
+    text-decoration: underline;
+    color: blue;
+}
+
+Label {
+    font-size: 15px;
+}
+.title {
+    font-size: 28%;
+    color: black;
+    font-family: "Al Bayan";
+}
+
+.account-icon {
+    font-size: 50%;
+}

@@ -43,19 +43,22 @@
                     text="Must be 6+ characters long."
             ></Label>
         </StackLayout>
-        <Button
-                class="btn password-login-button"
-                text="Login"
-                (tap)="onSubmit()"
-                [disabled]="!form.valid"
+        <StackLayout *ngIf="!isLoading">
+            <Button
+                    class="btn password-login-button"
+                    text="Login"
+                    (tap)="onSubmit()"
+                    [disabled]="!form.valid"
 
-        ></Button>
-        <GridLayout rows="auto, auto" paddingTop="15">
-            <GridLayout row="0" class="text-center small" columns="*,4*,3*">
-                <Label col="0"></Label>
-                <Label col="1" class="small" text="Forgot Password?"> </Label>
-                <Label text="Click Here"  col="2" class="small link" (tap)="goToForgotPassword()"></Label>
+            ></Button>
+            <GridLayout rows="auto, auto" paddingTop="15">
+                <GridLayout row="0" class="text-center small" columns="*,4*,3*">
+                    <Label col="0"></Label>
+                    <Label col="1" class="small" text="Forgot Password?"> </Label>
+                    <Label text="Click Here"  col="2" class="small link" (tap)="goToForgotPassword()"></Label>
+                </GridLayout>
             </GridLayout>
-        </GridLayout>
+        </StackLayout>
+        <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
     </StackLayout>
 </StackLayout>

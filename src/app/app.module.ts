@@ -21,6 +21,7 @@ import {ReadingsComponent} from "~/app/readings/readings.component";
 import {ViewDailySignsComponent} from "~/app/view-daily-signs/view-daily-signs.component";
 import {ForgotPasswordComponent} from "~/app/password/forgot-password.component";
 import { SelectListComponent } from "./modals/select-list/select-list.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -59,7 +60,8 @@ import { SelectListComponent } from "./modals/select-list/select-list.component"
         DoctorHomeScreenComponent,
         ViewDailySignsComponent,
         ForgotPasswordComponent,
-        SelectListComponent
+        SelectListComponent,
+        ProfileComponent
     ],
     providers: [],
     schemas: [

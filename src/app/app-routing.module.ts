@@ -14,6 +14,7 @@ import {ViewHistoryComponent} from "~/app/view-history/view-history.component";
 import {ReadingsComponent} from "~/app/readings/readings.component";
 import {ViewDailySignsComponent} from "~/app/view-daily-signs/view-daily-signs.component";
 import {ForgotPasswordComponent} from "~/app/password/forgot-password.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 const routes: Routes = [
     { path: "doctorLogin", component: DoctorLoginComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
     { path: "readings", component: ReadingsComponent},
     { path: "viewDailySigns", component: ViewDailySignsComponent},
     { path: "forgotPassword", component: ForgotPasswordComponent},
+    { path: "profile", component: ProfileComponent},
     { path: "", redirectTo: "/login", pathMatch: "full" },
 ];
 

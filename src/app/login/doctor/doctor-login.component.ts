@@ -5,6 +5,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TextField} from "tns-core-modules/ui/text-field";
 import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
+import { setString } from "tns-core-modules/application-settings/application-settings";
 
 @Component({
     selector: "Home",
@@ -77,6 +78,7 @@ export class DoctorLoginComponent implements OnInit {
                     resData => {
                         this.isLoading = false;
                         if (keys.indexOf(resData.localId) > -1) {
+                            setString('userType', JSON.stringify('medical-practitioners'));
                             this.router.navigate(['doctorHome'], { clearHistory: true }).then();
                         } else {
                             alert('User not recognized!!!');

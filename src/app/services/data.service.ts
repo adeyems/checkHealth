@@ -20,6 +20,25 @@ export class DataService {
         private authService: AuthService
     ) {}
 
+    public userDetails(userType: string) {
+        return this.authService.user.pipe(
+            take(1),
+            switchMap(
+            currentUser => {
+                if (!currentUser || !currentUser.isAuth) {
+                    return of(null);
+                }
+                return this.http.get(`${DataService.Config.FIREBASE_URL}/${userType}/${currentUser.id}.json?auth=${currentUser.token}`)
+                .pipe(
+                    catchError(errorRes => {
+                        DataService.handleError(errorRes.error.error.message);
+                        return throwError(errorRes);
+                    })
+                );
+            })
+        );
+    }
+
     public fetchMedicalPractitioners(userType: 'patients' | 'medical-practitioners') {
         return this.http.get(`${DataService.Config.FIREBASE_URL}/${userType}.json`)
         .pipe(
