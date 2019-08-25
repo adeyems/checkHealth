@@ -4,10 +4,12 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ViewDailySignsComponent} from "~/app/view-daily-signs/view-daily-signs.component";
 import { ViewDailySignsRoutingModule } from "~/app/view-daily-signs/view-daily-signs-routing.module";
+import { NativeScriptFormsModule } from "nativescript-angular";
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
+        NativeScriptFormsModule,
         ReactiveFormsModule,
         ViewDailySignsRoutingModule
     ],

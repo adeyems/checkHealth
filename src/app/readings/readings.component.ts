@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
+import {Component, OnInit, ViewContainerRef} from "@angular/core";
 import {RouterExtensions, ModalDialogService, ModalDialogOptions} from "nativescript-angular";
 
 import { AuthService } from "~/app/services/auth.service";
@@ -137,7 +137,7 @@ export class ReadingsComponent implements OnInit {
             let temp = moment(this.startHistory, ["YYYY-M-D"]).add(i, 'days').format('YYYY-M-D');
             this.historyDates.push(`${temp}`);
         }
-        this.startDate = moment(this.historyDates[0], ["YYYY-M-D"]).format("dddd, MMMM Do YYYY,");
-        this.endDate = moment(this.historyDates[6], ["YYYY-M-D"]).format("dddd, MMMM Do YYYY,");
+        this.startDate = moment(this.historyDates[0], ["YYYY-M-D"]).format("dddd, MMMM Do YYYY");
+        this.endDate = moment(this.historyDates[6], ["YYYY-M-D"]).format("dddd, MMMM Do YYYY");
     }
 }

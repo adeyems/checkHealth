@@ -31,7 +31,8 @@ export class PatientDailySignsComponent implements OnInit {
         },
         heartRate: "",
         bodyTemperature: "",
-        date: ""
+        date: "",
+        time: ""
     }
 
 
@@ -88,6 +89,7 @@ export class PatientDailySignsComponent implements OnInit {
 
     public onCreateReadingRecord() {
         this.vitalSignsModel.date = moment().format('YYYY-M-D');
+        this.vitalSignsModel.time = moment().format("HH:mm:ss");
         if (this.selectedIndex < 0) {
             this.errorText = 'Please Select a Medical Practitioner!'
             return;

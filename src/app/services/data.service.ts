@@ -76,14 +76,23 @@ export class DataService {
     }
 
     createVitalHistory(medPractId: string, startDate: string, payload) {
-        return this.http.post(
-            `${DataService.Config.FIREBASE_URL}/vitals-history/${medPractId}/${startDate}.json`, payload).pipe(
-                catchError(errorRes => {
-                    console.log(errorRes);
-                    DataService.handleError(errorRes.error.error.message);
-                    return throwError(errorRes);
-                })
-            );
+        return this.authService.user.pipe(
+            take(1),
+            switchMap(
+            currentUser => {
+                if (!currentUser || !currentUser.isAuth) {
+                    return of(null);
+                }
+                return this.http.post(
+                    `${DataService.Config.FIREBASE_URL}/vitals-history/${medPractId}/${currentUser.id}/${startDate}.json?auth=${currentUser.token}`, payload).pipe(
+                        catchError(errorRes => {
+                            console.log(errorRes);
+                            DataService.handleError(errorRes.error.error.message);
+                            return throwError(errorRes);
+                        })
+                    );
+            })
+        );
     }
 
     fetchVitalHistory(patientId: string, startDate: string) {
@@ -103,6 +112,18 @@ export class DataService {
                         return throwError(errorRes);
                     })
                 );
+            })
+        );
+    }
+
+    fetchPatientVitals(patientId: string) {
+        return this.http.get(
+            `${DataService.Config.FIREBASE_URL}/daily-reading-records/${patientId}/.json?orderBy="$key"&limitToLast=1`
+        ).pipe(
+            catchError(errorRes => {
+                console.log(errorRes);
+                DataService.handleError(errorRes.error.error.message);
+                return throwError(errorRes);
             })
         );
     }

@@ -1,8 +1,10 @@
 import {Component, OnInit, ViewContainerRef} from "@angular/core";
 import {RouterExtensions, ModalDialogOptions, ModalDialogService} from "nativescript-angular";
-import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import * as moment from "moment";
+import { DatePicker } from "tns-core-modules/ui/date-picker";
+
+import { AuthService } from "~/app/services/auth.service";
 import { DataService } from "../services/data.service";
 import { SelectListComponent } from "../modals/select-list/select-list.component";
 
@@ -18,7 +20,12 @@ export class ViewHistoryComponent implements OnInit {
     patientId: string;
     patientList: any[] = [];
     selectedIndex: number = -1;
-    errorText: string;
+    selectedDay;
+    selectedDate;
+    vitalsHistory;
+    historyDates: string[] = [];
+    viewMode: boolean = false;
+    isLoading: boolean = false;
 
     constructor(
         private router: RouterExtensions,
@@ -32,9 +39,6 @@ export class ViewHistoryComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.startDate = moment().subtract(10, "days").format("dddd, MMMM Do YYYY,");
-        this.endDate = moment().subtract(4, "days").format("dddd, MMMM Do YYYY,");
-
         this.dataService.fetchMedicalPractitioners('patients').subscribe(response => {
             for (let key in response) {
                 this.patientList.push({id: key, value:`${response[key][Object.keys(response[key])[0]].name} ${response[key][Object.keys(response[key])[0]].surname}`});
@@ -64,10 +68,64 @@ export class ViewHistoryComponent implements OnInit {
         this.modalDialog.showModal(SelectListComponent, options)
             .then(response => {
                 if (response != undefined) {
+                    this.vitalsHistory = null;
+                    this.viewMode = false;
                     this.selectedIndex = response;
                     this.setSelectedText();
                 }
             });
+    }
+
+    onPickerLoaded(args) {
+        let datePicker = <DatePicker>args.object;
+
+        datePicker.year = 2019;
+        datePicker.month = 1;
+        datePicker.day = 1;
+        datePicker.minDate = new Date(2019, 0, 2);
+        datePicker.maxDate = new Date(2045, 11, 31);
+    }
+
+    onDateChanged(args) {
+        this.selectedDate = moment(args.value, ["ddd MMM MM YYYY HH:mm:ss"]).format("YYYY-M-D");
+        this.selectedDay = moment(this.selectedDate, ["YYYY-MM-DD"]).format("e");
+        this.startDate = moment(this.selectedDate, ["YYYY-M-D"]).format("dddd, MMMM Do YYYY");
+        this.endDate = moment(this.selectedDate, ["YYYY-M-D"]).add(6, 'days').format("dddd, MMMM Do YYYY");
+    }
+
+    generateHistoryDate() {
+        this.historyDates = [];
+        this.historyDates.push(`${this.selectedDate}`);
+        for (let i = 1; i < 7; i++) {
+            let temp = moment(this.selectedDate, ["YYYY-M-D"]).add(i, 'days').format('YYYY-M-D');
+            this.historyDates.push(`${temp}`);
+        }
+    }
+
+    viewHistory() {
+        this.vitalsHistory = null;
+        this.generateHistoryDate();
+
+        if (this.selectedDay != 1) {
+            alert('Start of History must be Monday!');
+            return;
+        }
+        if (!this.patientId) {
+            alert('Please select a patient!');
+            return;
+        }
+
+        this.viewMode = true;
+        this.isLoading = true;
+
+        this.dataService.fetchVitalHistory(this.patientId, this.selectedDate).subscribe(res => {
+            if (res) {
+                this.vitalsHistory = res[Object.keys(res)[0]];
+            }
+            this.isLoading = false;
+        }, err => {
+            alert(err);
+        })
     }
 
     goToBrowseRelevantInfo() {
