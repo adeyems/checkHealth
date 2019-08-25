@@ -42,7 +42,7 @@
         ></TextField>
       </Stacklayout>
       <Stacklayout marginBottom="20">
-        <Label text="Name" class="text-deep-bold" textWrap="true"></Label>
+        <Label text="Email" class="text-deep-bold" textWrap="true"></Label>
         <TextField
           class="input input-field"
           isUserInteractionEnabled="false"
@@ -50,13 +50,19 @@
         ></TextField>
       </Stacklayout>
       <Stacklayout marginBottom="20">
-        <Label text="Name" class="text-deep-bold" textWrap="true"></Label>
+        <Label text="Phone" class="text-deep-bold" textWrap="true"></Label>
         <TextField
           class="input input-field"
           isUserInteractionEnabled="false"
           [(ngModel)]="profileModel.phone"
         ></TextField>
       </Stacklayout>
+      <StackLayout marginBottom="20">
+        <Button
+                class="btn btn-danger"
+                text="Update Phone"
+        ></Button>
+      </StackLayout>
       <StackLayout marginBottom="20">
         <Button
           class="btn btn-danger"
