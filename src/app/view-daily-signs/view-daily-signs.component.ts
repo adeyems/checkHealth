@@ -100,4 +100,10 @@ export class ViewDailySignsComponent implements OnInit {
     goToProfile() {
         this.router.navigate(["profile"]).catch();
     }
+
+    sendMessageToPatient() {
+
+    }
+
+
 }

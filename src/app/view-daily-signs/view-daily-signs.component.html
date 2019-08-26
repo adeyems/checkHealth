@@ -170,15 +170,22 @@
       </StackLayout>
     </StackLayout>
     <StackLayout paddingTop="20">
-      <GridLayout rows="*" columns="*,*,*">
+      <GridLayout rows="*" columns="*,*,2*">
         <Button
           class="btn btn-black"
-          col="2"
+          col="0"
           row="0"
           text="Back"
           (tap)="goToDoctorHomeScreen()"
         ></Button>
-      </GridLayout>
+          <Button
+                  class="btn btn-black"
+                  col="2"
+                  row="0"
+                  text="Send Message to Patient"
+                  (tap)="sendMessageToPatient()"
+          ></Button>
+        </GridLayout>
     </StackLayout>
   </StackLayout>
 </Scrollview>
