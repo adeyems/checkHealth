@@ -57,7 +57,7 @@
       ></Label>
       <TextField
         isUserInteractionEnabled="false"
-        [text]="setSelectedText()"
+        [text]="patientFullname"
         (tap)="openPatientBox()"
         class="input"
         width="50%"
@@ -178,14 +178,15 @@
           text="Back"
           (tap)="goToDoctorHomeScreen()"
         ></Button>
-          <Button
-                  class="btn btn-black"
-                  col="2"
-                  row="0"
-                  text="Send Message to Patient"
-                  (tap)="sendMessageToPatient()"
-          ></Button>
-        </GridLayout>
+        <Button
+          *ngIf="vitalSignsModel && patientId"
+          class="btn btn-black"
+          col="2"
+          row="0"
+          text="Send Message to Patient"
+          (tap)="sendMessageToPatient()"
+        ></Button>
+      </GridLayout>
     </StackLayout>
   </StackLayout>
 </Scrollview>

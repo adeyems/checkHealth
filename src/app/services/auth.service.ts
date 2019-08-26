@@ -30,7 +30,7 @@ interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private _user = new BehaviorSubject<UserModel>(null);
-    private tokenExpirationTimer: number;
+    private tokenExpirationTimer;
     private currentUser = "patient";
 
     constructor(

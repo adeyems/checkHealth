@@ -17,6 +17,8 @@ export class ViewDailySignsComponent implements OnInit {
     currentTime: string;
 
     patientId: string;
+    patientPhone;
+    patientFullname = '';
     patientList: any[] = [];
     selectedIndex: number = -1;
     errorText: string;
@@ -40,7 +42,13 @@ export class ViewDailySignsComponent implements OnInit {
 
         this.dataService.fetchMedicalPractitioners('patients').subscribe(response => {
             for (let key in response) {
-                this.patientList.push({id: key, value:`${response[key][Object.keys(response[key])[0]].name} ${response[key][Object.keys(response[key])[0]].surname}`});
+                this.patientList.push(
+                    {
+                        id: key,
+                        value:`${response[key][Object.keys(response[key])[0]].name} ${response[key][Object.keys(response[key])[0]].surname}`,
+                        phone: response[key][Object.keys(response[key])[0]].phone
+                    }
+                );
             }
         });
     }
@@ -48,14 +56,17 @@ export class ViewDailySignsComponent implements OnInit {
     setSelectedText() {
         if (this.selectedIndex > -1) {
             this.patientId = this.patientList[this.selectedIndex].id;
-            return this.patientList[this.selectedIndex].value;
+            this.patientFullname = this.patientList[this.selectedIndex].value;
+            this.patientPhone = this.patientList[this.selectedIndex].phone;
+            console.log('??????', this.patientPhone);
+            console.log('------', this.patientFullname);
+            return this.patientFullname;
         } else {
             return 'Select';
         }
     }
 
     public openPatientBox() {
-        this.vitalSignsModel = null;
         const options: ModalDialogOptions = {
             context: {
                 boxItems: this.patientList,
@@ -81,7 +92,11 @@ export class ViewDailySignsComponent implements OnInit {
                const currentDate = moment().format("YYYY-M-D");
                 if (res[Object.keys(res)[0]].date === currentDate) {
                     this.vitalSignsModel = res[Object.keys(res)[0]];
+                } else {
+                    this.vitalSignsModel = null;
                 }
+            } else {
+                this.vitalSignsModel = null;
             }
 
         }, err => {
