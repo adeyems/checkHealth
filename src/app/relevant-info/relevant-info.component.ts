@@ -1,7 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {RouterExtensions} from "nativescript-angular";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {TextField} from "tns-core-modules/ui/text-field";
 import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import {getFile} from "tns-core-modules/http";
