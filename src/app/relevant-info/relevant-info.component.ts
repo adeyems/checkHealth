@@ -8,6 +8,9 @@ import {getFile} from "tns-core-modules/http";
 import {Folder} from "tns-core-modules/file-system";
 import {Observable} from "tns-core-modules/data/observable";
 import {DownloadManager} from "nativescript-downloadmanager";
+import { PDFView } from "nativescript-pdf-view";
+import { registerElement } from 'nativescript-angular';
+registerElement('PDFView', () => PDFView);
 
 @Component({
     selector: "Home",
@@ -16,16 +19,7 @@ import {DownloadManager} from "nativescript-downloadmanager";
     styleUrls: ["./relevant-info.component.css"]
 })
 export class RelevantInfoComponent extends Observable{
-    public folderName: string;
-    public fileName: string;
-    public fileTextContent: string;
-
-    public successMessage: string;
-    public writtenContent: string;
-    public isItemVisible: boolean = false;
-
-    public file: File;
-    public folder: Folder;
+    pdfpath: any;
 
 
     constructor(
@@ -66,6 +60,10 @@ export class RelevantInfoComponent extends Observable{
             // unregisterBroadcast is used to unregister the broadcast (For example if you just want to
             // download a single file).
             dm.unregisterBroadcast();
+
+            let self = this;
+            self.pdfpath = uri;
+
         })
     }
 }
