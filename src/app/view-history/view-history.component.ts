@@ -132,7 +132,7 @@ export class ViewHistoryComponent implements OnInit {
         this.router.navigate(["relevantInfo"]).then();
     }
 
-    onLogout() {
-        this.authService.logout();
+    goToProfile() {
+        this.router.navigate(["profile"]).catch();
     }
 }

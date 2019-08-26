@@ -99,7 +99,7 @@ export class PatientDailySignsComponent implements OnInit {
         });
     }
 
-    onLogout() {
-        this.authService.logout();
+    goToProfile() {
+        this.router.navigate(["profile"]).catch();
     }
 }

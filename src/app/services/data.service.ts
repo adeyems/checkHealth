@@ -39,6 +39,27 @@ export class DataService {
         );
     }
 
+    updateDetails(userType: string, profileId: string, payload) {
+        delete payload.fullname;
+        return this.authService.user.pipe(
+            take(1),
+            switchMap(
+            currentUser => {
+                if (!currentUser || !currentUser.isAuth) {
+                    return of(null);
+                }
+                return this.http.put(`${DataService.Config.FIREBASE_URL}/${userType}/${currentUser.id}/${profileId}.json?auth=${currentUser.token}`,
+                payload)
+                .pipe(
+                    catchError(errorRes => {
+                        DataService.handleError(errorRes.error.error.message);
+                        return throwError(errorRes);
+                    })
+                );
+            })
+        );
+    }
+
     public fetchMedicalPractitioners(userType: 'patients' | 'medical-practitioners') {
         return this.http.get(`${DataService.Config.FIREBASE_URL}/${userType}.json`)
         .pipe(

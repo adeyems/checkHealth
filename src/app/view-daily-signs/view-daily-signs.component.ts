@@ -97,7 +97,7 @@ export class ViewDailySignsComponent implements OnInit {
         this.router.navigate(["createHistory"]).then()
     }
 
-    onLogout() {
-        this.authService.logout();
+    goToProfile() {
+        this.router.navigate(["profile"]).catch();
     }
 }

@@ -98,8 +98,8 @@ export class ReadingsComponent implements OnInit {
         })
     }
 
-    onLogout() {
-        this.authService.logout();
+    goToProfile() {
+        this.router.navigate(["profile"]).catch();
     }
 
     private generateHistoryDate() {

@@ -37,8 +37,8 @@ export class RelevantInfoComponent extends Observable{
     }
 
 
-    onLogout() {
-        this.authService.logout();
+    goToProfile() {
+        this.router.navigate(["profile"]).catch();
     }
 
     downloadAsthma() {
