@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
     userType: string;
     profileModel;
     profileId: string;
+    fullname: string;
 
     constructor(
         private router: RouterExtensions,
@@ -27,7 +28,7 @@ export class ProfileComponent implements OnInit {
         this.dataService.userDetails(this.userType).subscribe(res => {
             this.profileId = Object.keys(res)[0];
             this.profileModel = res[this.profileId];
-            this.profileModel.fullname = `${this.profileModel.name} ${this.profileModel.surname}`;
+            this.fullname = `${this.profileModel.name} ${this.profileModel.surname}`;
         }, err => {
             alert(err);
         })

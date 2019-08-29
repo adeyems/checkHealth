@@ -95,6 +95,7 @@ export class PatientDailySignsComponent implements OnInit {
             return;
         }
         this.dataService.createReadingRecord(this.vitalSignsModel).subscribe(response => {
+            alert('Vitals Created Successfully!');
             this.router.navigate(['patientHome'], { clearHistory: true }).then();
         });
     }
