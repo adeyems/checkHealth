@@ -31,7 +31,7 @@ const routes: Routes = [
     { path: "viewDailySigns", component: ViewDailySignsComponent},
     { path: "forgotPassword", component: ForgotPasswordComponent},
     { path: "profile", component: ProfileComponent},
-    { path: "", redirectTo: "/doctorHome", pathMatch: "full" },
+    { path: "", redirectTo: "/login", pathMatch: "full" },
 ];
 
 @NgModule({

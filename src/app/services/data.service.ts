@@ -94,23 +94,34 @@ export class DataService {
         );
     }
 
-    fetchUserVitalsReading() {
-        return this.authService.user.pipe(
-            take(1),
-            switchMap(
-            currentUser => {
-                if (!currentUser || !currentUser.isAuth) {
-                    return of(null);
-                }
-                return this.http.get(
-                    `${DataService.Config.FIREBASE_URL}/daily-reading-records/${currentUser.id}.json?auth=${currentUser.token}`
-                ).pipe(
-                    catchError(errorRes => {
-                        console.log(errorRes);
-                        DataService.handleError(errorRes.error.error.message);
-                        return throwError(errorRes);
+    fetchUserVitalsReading(patientId?: string) {
+        if (!patientId) {
+            return this.authService.user.pipe(
+                take(1),
+                switchMap(
+                    currentUser => {
+                        if (!currentUser || !currentUser.isAuth) {
+                            return of(null);
+                        }
+                        return this.http.get(
+                            `${DataService.Config.FIREBASE_URL}/daily-reading-records/${currentUser.id}.json?auth=${currentUser.token}`
+                        ).pipe(
+                            catchError(errorRes => {
+                                console.log(errorRes);
+                                DataService.handleError(errorRes.error.error.message);
+                                return throwError(errorRes);
+                            })
+                        );
                     })
-                );
+            );
+        }
+        return this.http.get(
+            `${DataService.Config.FIREBASE_URL}/daily-reading-records/${patientId}.json`
+        ).pipe(
+            catchError(errorRes => {
+                console.log(errorRes);
+                DataService.handleError(errorRes.error.error.message);
+                return throwError(errorRes);
             })
         );
     }
@@ -166,6 +177,12 @@ export class DataService {
                 return throwError(errorRes);
             })
         );
+    }
+
+    sendPatientMessage(payload) {
+        return this.http.post('https://api.vertexiac.com/api/send/message',
+            payload,
+            {headers: {"content-type" : "application/json"}});
     }
 
     private static handleError(errorMessage: string) {

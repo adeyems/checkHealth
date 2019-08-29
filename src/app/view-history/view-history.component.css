@@ -84,17 +84,19 @@ Label {
     margin-top: 10;
 }
 .history-item {
-    background-color: whitesmoke;
     color: black;
     padding: 10 0;
     width: 100%;
+}
+.history-item.header {
+    background-color: whitesmoke;
 }
 .hb-col {
     width: 20%;
     align-self: center;
     text-align: center;
 }
-.history-item.history-date {
+.history-item.items {
     background-color: ghostwhite;
     color: black;
     border-bottom-width: 1;

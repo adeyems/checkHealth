@@ -22,7 +22,8 @@ export class ViewHistoryComponent implements OnInit {
     selectedIndex: number = -1;
     selectedDay;
     selectedDate;
-    vitalsHistory;
+    selectedEndDate;
+    vitalsHistory = [];
     historyDates: string[] = [];
     viewMode: boolean = false;
     isLoading: boolean = false;
@@ -68,7 +69,7 @@ export class ViewHistoryComponent implements OnInit {
         this.modalDialog.showModal(SelectListComponent, options)
             .then(response => {
                 if (response != undefined) {
-                    this.vitalsHistory = null;
+                    this.vitalsHistory = [];
                     this.viewMode = false;
                     this.selectedIndex = response;
                     this.setSelectedText();
@@ -81,29 +82,43 @@ export class ViewHistoryComponent implements OnInit {
 
         datePicker.year = 2019;
         datePicker.month = 1;
-        datePicker.day = 1;
-        datePicker.minDate = new Date(2019, 0, 2);
-        datePicker.maxDate = new Date(2045, 11, 31);
+        datePicker.day = 0;
+        datePicker.minDate = new Date(2019, 0, 1);
+        datePicker.maxDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    }
+
+    onEndDatePickerLoaded(args) {
+        let datePicker = <DatePicker>args.object;
+        datePicker.year = 2019;
+        datePicker.month = 1;
+        datePicker.day = 0;
+        datePicker.minDate = new Date(2019, 0, 1);
+        datePicker.maxDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     }
 
     onDateChanged(args) {
         this.selectedDate = moment(args.value, ["ddd MMM MM YYYY HH:mm:ss"]).format("YYYY-M-D");
         this.selectedDay = moment(this.selectedDate, ["YYYY-MM-DD"]).format("e");
         this.startDate = moment(this.selectedDate, ["YYYY-M-D"]).format("dddd, MMMM Do YYYY");
-        this.endDate = moment(this.selectedDate, ["YYYY-M-D"]).add(6, 'days').format("dddd, MMMM Do YYYY");
+    }
+
+    onEndDateChanged(args) {
+        this.selectedEndDate = moment(args.value, ["ddd MMM MM YYYY HH:mm:ss"]).format("YYYY-M-D");
+        this.endDate = moment(this.selectedEndDate, ["YYYY-M-D"]).format("dddd, MMMM Do YYYY");
     }
 
     generateHistoryDate() {
+        let daysDiff = moment(this.selectedEndDate, ["YYYY-M-D"]).diff(moment(this.selectedDate, ["YYYY-M-D"]), 'days');
         this.historyDates = [];
         this.historyDates.push(`${this.selectedDate}`);
-        for (let i = 1; i < 7; i++) {
+        for (let i = 1; i < daysDiff + 1; i++) {
             let temp = moment(this.selectedDate, ["YYYY-M-D"]).add(i, 'days').format('YYYY-M-D');
             this.historyDates.push(`${temp}`);
         }
     }
 
     viewHistory() {
-        this.vitalsHistory = null;
+        this.vitalsHistory = [];
         this.generateHistoryDate();
 
         if (this.selectedDay != 1) {
@@ -118,11 +133,25 @@ export class ViewHistoryComponent implements OnInit {
         this.viewMode = true;
         this.isLoading = true;
 
-        this.dataService.fetchVitalHistory(this.patientId, this.selectedDate).subscribe(res => {
+        // this.dataService.fetchVitalHistory(this.patientId, this.selectedDate).subscribe(res => {
+        //     if (res) {
+        //         this.vitalsHistory = res[Object.keys(res)[0]];
+        //     }
+        //     this.isLoading = false;
+        // }, err => {
+        //     alert(err);
+        // })
+        this.dataService.fetchUserVitalsReading(this.patientId).subscribe(res => {
             if (res) {
-                this.vitalsHistory = res[Object.keys(res)[0]];
+                for (let key in res) {
+                    if (this.historyDates.indexOf(res[key].date) > -1) {
+                        res[key]['day'] = moment([res[key].date], ["YYYY-M-D"]).format("dddd");
+                        this.vitalsHistory.push(res[key]);
+                        // this.vitalsHistory[res[key].date] = res[key];
+                        // this.vitalsHistory[res[key].date]['day'] = moment([res[key].date], ["YYYY-M-D"]).format("dddd");
+                    }
+                }
             }
-            this.isLoading = false;
         }, err => {
             alert(err);
         })
