@@ -3,13 +3,13 @@ import {RouterExtensions} from "nativescript-angular";
 import {Observable} from "tns-core-modules/data/observable";
 import {DownloadManager} from "nativescript-downloadmanager";
 
-
 @Component({
     selector: "Home",
     moduleId: module.id,
     templateUrl: "./relevant-info.component.html",
     styleUrls: ["./relevant-info.component.css"]
 })
+
 export class RelevantInfoComponent extends Observable {
     isVisible = false;
 
@@ -32,7 +32,7 @@ export class RelevantInfoComponent extends Observable {
         // Aside from that there are optional parameters for. Directory (always inside android/data/yourapp/),
         // The file name, and title and description for the notification bar. By default it uses the file name
         // as title, and no description.
-        alert("Ongoing download");
+        alert("Ongoing download. You will be notified when it is done.");
         dm.downloadFile(url,  (result, uri) => {
             // result is a boolean, if the download was successful, it will return true
             console.log(result);
