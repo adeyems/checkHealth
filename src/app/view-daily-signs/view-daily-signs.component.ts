@@ -120,7 +120,7 @@ export class ViewDailySignsComponent implements OnInit {
         let receiver = this.patientPhone;
         let messageBody = `Dear ${this.patientFullname}, Abnormal readings have been detected. Please make appointment as soon as possible to visit me.`
         const payload = {
-            to: "+2348188551310",
+            to: receiver,
             body: messageBody
         };
         this.dataService.sendPatientMessage(payload).subscribe(res => {
