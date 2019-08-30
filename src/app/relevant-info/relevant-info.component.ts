@@ -1,14 +1,9 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {RouterExtensions} from "nativescript-angular";
-import { AuthService } from "~/app/services/auth.service";
-import {ActivatedRoute} from "@angular/router";
-import {getFile} from "tns-core-modules/http";
-import {Folder} from "tns-core-modules/file-system";
 import {Observable} from "tns-core-modules/data/observable";
 import {DownloadManager} from "nativescript-downloadmanager";
-import { PDFView } from "nativescript-pdf-view";
-import { registerElement } from 'nativescript-angular';
-registerElement('PDFView', () => PDFView);
+import {Progress} from "tns-core-modules/ui/progress";
+import {async} from "rxjs/internal/scheduler/async";
 
 @Component({
     selector: "Home",
@@ -16,28 +11,17 @@ registerElement('PDFView', () => PDFView);
     templateUrl: "./relevant-info.component.html",
     styleUrls: ["./relevant-info.component.css"]
 })
-export class RelevantInfoComponent extends Observable{
-    pdfpath: any;
-
+export class RelevantInfoComponent extends Observable {
+    isVisible = false;
 
     constructor(
         private router: RouterExtensions,
-        private authService: AuthService,
-        private activatedRoute: ActivatedRoute
     ) {
         super();
     }
 
-
     goToProfile() {
         this.router.navigate(["profile"]).catch();
-    }
-
-    downloadAsthma() {
-        getFile("https://firebasestorage.googleapis.com/v0/b/checkhealth-51468.appspot.com/o/asthma.pdf?alt=media&token=44e1c71b-308d-4485-bebc-352b0561836a").then((resultFile) => {
-
-        }, (e) => {
-        });
     }
 
     public download(url: string) {
@@ -49,19 +33,19 @@ export class RelevantInfoComponent extends Observable{
         // Aside from that there are optional parameters for. Directory (always inside android/data/yourapp/),
         // The file name, and title and description for the notification bar. By default it uses the file name
         // as title, and no description.
-        dm.downloadFile(url, function(result,uri) {
+        this.isVisible = true;
+
+        dm.downloadFile(url,  (result, uri) => {
             // result is a boolean, if the download was successful, it will return true
             console.log(result);
+            const filename = (uri.split("downloads")[1]);
             // Uri in file:// format of the downloaded file.
-            alert('File Downloaded. Saved in Android/org.nativescript.checkHealth/files/downloads');
+            alert(`File Downloaded. Saved in Android/org.nativescript.checkHealth/files/downloads${filename}`);
             console.log(uri);
             // unregisterBroadcast is used to unregister the broadcast (For example if you just want to
             // download a single file).
             dm.unregisterBroadcast();
-
-            let self = this;
-            self.pdfpath = uri;
-
-        })
+            this.isVisible = false;
+        });
     }
 }
