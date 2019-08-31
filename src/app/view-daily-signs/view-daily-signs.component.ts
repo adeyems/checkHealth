@@ -129,6 +129,4 @@ export class ViewDailySignsComponent implements OnInit {
             alert(err);
         })
     }
-
-
 }
