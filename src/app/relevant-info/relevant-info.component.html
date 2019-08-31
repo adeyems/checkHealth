@@ -27,60 +27,63 @@
     ></Label>
   </GridLayout>
 </ActionBar>
-<StackLayout class="page ">
-  <StackLayout paddingBottom="30" paddingTop="20">
-    <Label
-      class="text-center title"
-      textWrap="true"
-      text="Browse Relevant Information About Asthma"
-    ></Label>
-  </StackLayout>
-  <StackLayout>
-    <Label
-      class="btn btn-black text-center"
-      textWrap="true"
-      text="What is Asthma?"
-      (tap)="
+<ScrollView>
+  <StackLayout class="page ">
+    <StackLayout paddingBottom="30" paddingTop="20">
+      <Label
+              class="text-center title"
+              textWrap="true"
+              text="Browse Relevant Information About Asthma"
+      ></Label>
+    </StackLayout>
+    <StackLayout>
+      <Label
+              class="btn btn-black text-center"
+              textWrap="true"
+              text="What is Asthma?"
+              (tap)="
         download(
           'https://firebasestorage.googleapis.com/v0/b/checkhealth-51468.appspot.com/o/asthma.pdf?alt=media&token=44e1c71b-308d-4485-bebc-352b0561836a'
         )
       "
-    ></Label>
-  </StackLayout>
-  <StackLayout>
-    <Label
-      class="btn btn-black text-center"
-      textWrap="true"
-      (tap)="
+      ></Label>
+    </StackLayout>
+    <StackLayout>
+      <Label
+              class="btn btn-black text-center"
+              textWrap="true"
+              (tap)="
         download(
           'https://firebasestorage.googleapis.com/v0/b/checkhealth-51468.appspot.com/o/ASTHMA.pdf?alt=media&token=751c7d51-3897-4e37-b848-f6adc332cba8'
         )
       "
-      text="Introduction to Asthma.pdf"
-    ></Label>
-  </StackLayout>
-  <StackLayout>
-    <Label
-      class="btn btn-black text-center"
-      textWrap="true"
-      (tap)="
+              text="Introduction to Asthma.pdf"
+      ></Label>
+    </StackLayout>
+    <StackLayout>
+      <Label
+              class="btn btn-black text-center"
+              textWrap="true"
+              (tap)="
         download(
           'https://firebasestorage.googleapis.com/v0/b/checkhealth-51468.appspot.com/o/Indoor%20Air%20Quality%20Report.pdf?alt=media&token=df825a66-5250-4b02-8731-e8999078a3ba'
         )
       "
-      text="Asthma and Indoor Air Quality"
-    ></Label>
-  </StackLayout>
-  <StackLayout>
-    <Label
-      class="btn btn-black text-center"
-      textWrap="true"
-      text="Asthma Control"
-      (tap)="
+              text="Asthma and Indoor Air Quality"
+      ></Label>
+    </StackLayout>
+    <StackLayout>
+      <Label
+              class="btn btn-black text-center"
+              textWrap="true"
+              text="Asthma Control"
+              (tap)="
         download(
           'https://firebasestorage.googleapis.com/v0/b/checkhealth-51468.appspot.com/o/Lung%20Control%20in%20Canada%20Report_FINAL_EN_December%2016.pdf?alt=media&token=ee12fdd3-04a2-4cb2-b272-503619f69c2e'
         )
       "
-    ></Label>
+      ></Label>
+    </StackLayout>
   </StackLayout>
-</StackLayout>
+
+</ScrollView>

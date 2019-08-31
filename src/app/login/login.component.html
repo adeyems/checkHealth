@@ -4,14 +4,18 @@
        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording of Vital Signs for Asthmatic Patients"></Label>
     </GridLayout>
 </ActionBar>
-<StackLayout class="page">
-    <StackLayout paddingBottom="50" paddingTop="20">
-        <Label class="text-center title" text="Login"></Label>
+<ScrollView>
+    <StackLayout class="page">
+        <StackLayout paddingBottom="50" paddingTop="20">
+            <Label class="text-center title" text="Login"></Label>
+        </StackLayout>
+        <StackLayout paddingBottom="30">
+            <Button (tap)="goToPatientLogin()" class="btn btn-black" text="Asthmatic Patient"></Button>
+        </StackLayout>
+        <StackLayout>
+            <Button class="btn btn-black" (tap)="goToMedicalPractitionerLogin()" text="Medical Practitioner"></Button>
+        </StackLayout>
     </StackLayout>
-    <StackLayout paddingBottom="30">
-        <Button (tap)="goToPatientLogin()" class="btn btn-black" text="Asthmatic Patient"></Button>
-    </StackLayout>
-    <StackLayout>
-        <Button class="btn btn-black" (tap)="goToMedicalPractitionerLogin()" text="Medical Practitioner"></Button>
-    </StackLayout>
-</StackLayout>
+</ScrollView>
+
+

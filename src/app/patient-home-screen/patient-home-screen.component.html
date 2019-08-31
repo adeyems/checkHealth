@@ -28,29 +28,32 @@
   </GridLayout>
 </ActionBar>
 
-<StackLayout class="page ">
-  <StackLayout paddingBottom="30" paddingTop="20">
-    <Label class="text-center title" text="Patient Home Screen"></Label>
+<ScrollView>
+  <StackLayout class="page ">
+    <StackLayout paddingBottom="30" paddingTop="20">
+      <Label class="text-center title" text="Patient Home Screen"></Label>
+    </StackLayout>
+    <StackLayout paddingBottom="30">
+      <Button
+              class="btn btn-black"
+              (tap)="goToBrowseRelevantInfo()"
+              text="Browse Relevant Information"
+      ></Button>
+    </StackLayout>
+    <StackLayout paddingBottom="30">
+      <Button
+              class="btn btn-black"
+              (tap)="goToPatientDailySigns()"
+              text="Provide Readings from Wearable"
+      ></Button>
+    </StackLayout>
+    <StackLayout>
+      <Button
+              class="btn btn-black"
+              (tap)="goToReadings()"
+              text="Create End of History"
+      ></Button>
+    </StackLayout>
   </StackLayout>
-  <StackLayout paddingBottom="30">
-    <Button
-      class="btn btn-black"
-      (tap)="goToBrowseRelevantInfo()"
-      text="Browse Relevant Information"
-    ></Button>
-  </StackLayout>
-  <StackLayout paddingBottom="30">
-    <Button
-      class="btn btn-black"
-      (tap)="goToPatientDailySigns()"
-      text="Provide Readings from Wearable"
-    ></Button>
-  </StackLayout>
-  <StackLayout>
-    <Button
-      class="btn btn-black"
-      (tap)="goToReadings()"
-      text="Create End of History"
-    ></Button>
-  </StackLayout>
-</StackLayout>
+
+</ScrollView>
