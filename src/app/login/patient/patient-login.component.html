@@ -1,7 +1,7 @@
 <ActionBar class="action-bar">
     <GridLayout rows="*" columns="2*,5*,*">
         <Image src="res://icon" class="page-icon" row="0" verticalAlignment="center" col="0" stretch="aspectFit"></Image>
-        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording of Vital Signs for Asthmatic Patients"></Label>
     </GridLayout>
 </ActionBar>
 <StackLayout>
@@ -40,7 +40,7 @@
             ></TextField>
             <Label  class="input-error"
                     *ngIf="!passwordControlIsValid"
-                    text="Must be 6+ characters long."
+                    text="Must be 8+ characters long."
             ></Label>
         </StackLayout>
         <StackLayout *ngIf="!isLoading">

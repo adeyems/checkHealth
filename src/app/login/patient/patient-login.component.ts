@@ -41,7 +41,7 @@ export class PatientLoginComponent implements OnInit {
             }),
             password: new FormControl(null, {
                 updateOn: 'blur',
-                validators: [Validators.required, Validators.minLength(6)]
+                validators: [Validators.required, Validators.minLength(8)]
             }),
         });
 
