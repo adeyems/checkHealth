@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TextField} from "tns-core-modules/ui/text-field";
 import {AuthService} from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
+import { setString } from "tns-core-modules/application-settings/application-settings";
 
 @Component({
     selector: "Home",
@@ -40,7 +41,7 @@ export class PatientLoginComponent implements OnInit {
             }),
             password: new FormControl(null, {
                 updateOn: 'blur',
-                validators: [Validators.required, Validators.minLength(6)]
+                validators: [Validators.required, Validators.minLength(8)]
             }),
         });
 
@@ -60,14 +61,50 @@ export class PatientLoginComponent implements OnInit {
     }
 
     onSubmit() {
-        this.router.navigate(["patientHome"]).then()
-    }
+        this.emailEl.nativeElement.focus();
+        this.passwordEl.nativeElement.focus();
+        this.passwordEl.nativeElement.dismissSoftInput();
 
-    goToSignup() {
-        this.router.navigate([""]).then()
+        if (!this.form.valid) {
+            return;
+        }
+
+        const email = this.form.get('email').value;
+        const password = this.form.get('password').value;
+
+        this.form.reset();
+        this.emailControlIsValid = true;
+        this.passwordControlIsValid = true;
+        this.isLoading = true;
+        this.authService.checkUserType('patients')
+            .subscribe(response => {
+                const keys = Object.keys(response);
+                this.authService.login(email, password, keys).subscribe(
+                    resData => {
+                        this.isLoading = false;
+                        if (keys.indexOf(resData.localId) > -1) {
+                            setString('userType', JSON.stringify('patients'));
+                            this.router.navigate(['patientHome'], { clearHistory: true }).then();
+                        } else {
+                            alert('User not recognized!!!');
+                        }
+                    },
+                    err => {
+                        console.log(err);
+                        this.isLoading = false;
+                    }
+                );
+
+            });
+
     }
 
     goToSignUp() {
-        this.router.navigate(["signup"]).then()
+        this.router.navigate(["patientSignup"]).then()
     }
+
+    goToForgotPassword() {
+        this.router.navigate(["forgotPassword"])
+            .catch()    }
+
 }

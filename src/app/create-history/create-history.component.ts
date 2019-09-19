@@ -1,10 +1,15 @@
 import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
-import {RouterExtensions} from "nativescript-angular";
+import {RouterExtensions, ModalDialogOptions, ModalDialogService} from "nativescript-angular";
 import {of} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TextField} from "tns-core-modules/ui/text-field";
 import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
+import * as moment from "moment";
+import {ListPicker} from "tns-core-modules/ui/list-picker";
+import { SelectListComponent } from "../modals/select-list/select-list.component";
+
+let pokemonList = ["Adeyemo Qudus", "Ade Adenrele", "Ola Global"];
 
 @Component({
     selector: "Home",
@@ -13,81 +18,84 @@ import {ActivatedRoute} from "@angular/router";
     styleUrls: ["./create-history.component.css"]
 })
 export class CreateHistoryComponent implements OnInit {
-    form: FormGroup;
-    emailControlIsValid = true;
-    passwordControlIsValid = true;
-    isLoading = false;
-    @ViewChild("passwordEl", {static: false}) passwordEl: ElementRef<TextField>;
-    @ViewChild("emailEl", {static: false}) emailEl: ElementRef<TextField>;
-    pageTitle: string;
-    public currentUser: string;
+    startDate: string;
+    endDate: string;
+    public pokemons: Array<string>;
+    index: number;
+    sunday: string;
+    monday: string;
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    degreeCelcius = "B.T.(<sup>o</sup>C)";
 
+    medicalPractitioners: any[];
+    selectedIndex: number = -1;
+    errorText: string;
     constructor(
         private router: RouterExtensions,
         private authService: AuthService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        protected modalDialog: ModalDialogService,
+        protected vcRef: ViewContainerRef,
     ) {
-        this.activatedRoute.queryParams.subscribe( params => {
-            this.currentUser = params["user"];
-            console.log(this.currentUser);
-        });
+        this.pokemons = [];
+
+        for (let i = 0; i < pokemonList.length; i++) {
+            this.pokemons.push(pokemonList[i]);
+        }
     }
 
     ngOnInit() {
-        this.form = new FormGroup({
-            email: new FormControl(null, {
-                updateOn: 'blur',
-                validators: [Validators.required, Validators.email]
-            }),
-            password: new FormControl(null, {
-                updateOn: 'blur',
-                validators: [Validators.required, Validators.minLength(6)]
-            })
-        });
-
-        this.form.get('email').statusChanges.subscribe(status => {
-            this.emailControlIsValid = status === 'VALID';
-        });
-
-        this.form.get('password').statusChanges.subscribe(status => {
-            this.passwordControlIsValid = status === 'VALID';
-        });
+        this.startDate = moment().subtract(10, "days").format("dddd, MMMM Do YYYY,");
+        this.endDate = moment().subtract(4, "days").format("dddd, MMMM Do YYYY,");
+        this.sunday = moment().subtract(4, "days").format('DD-MM-YY');
+        this.monday = moment().subtract(10, "days").format('DD-MM-YY');
+        this.tuesday = moment().subtract(9, "days").format('DD-MM-YY');
+        this.wednesday = moment().subtract(8, "days").format('DD-MM-YY');
+        this.thursday = moment().subtract(7, "days").format('DD-MM-YY');
+        this.friday = moment().subtract(6, "days").format('DD-MM-YY');
+        this.saturday = moment().subtract(5, "days").format('DD-MM-YY');
+    }
+    public selectedIndexChanged(args) {
+        let picker = <ListPicker>args.object;
+        console.log("picker selection: " + picker.selectedIndex);
     }
 
-    onSubmit() {
-        this.emailEl.nativeElement.focus();
-        this.passwordEl.nativeElement.focus();
-        this.passwordEl.nativeElement.dismissSoftInput();
-
-        if (!this.form.valid) {
-            return;
+    setSelectedText() {
+        if (this.selectedIndex > -1) {
+            // this.vitalSignsModel.medicalPractitionerId = this.medicalPractitioners[this.selectedIndex].id;
+            return this.medicalPractitioners[this.selectedIndex].value;
+        } else {
+            return 'Select';
         }
+    }
 
-        const email = this.form.get('email').value;
-        const password = this.form.get('password').value;
-        this.form.reset();
-        this.emailControlIsValid = true;
-        this.passwordControlIsValid = true;
-        this.isLoading = true;
-        this.authService.login(email, password).subscribe(
-            resData => {
-                this.isLoading = false;
-                this.router.navigate(['/challenges'], { clearHistory: true }).then();
+    public openMedicalPractitionerBox() {
+        const options: ModalDialogOptions = {
+            context: {
+                boxItems: this.medicalPractitioners,
+                boxName: 'Medical Practitioner',
+                selectedIndex: this.selectedIndex
             },
-            err => {
-                console.log(err);
-                this.isLoading = false;
-            }
-        );
+            fullscreen: false,
+            viewContainerRef: this.vcRef
+        }
+        this.modalDialog.showModal(SelectListComponent, options)
+            .then(response => {
+                if (response != undefined) {
+                    this.selectedIndex = response;
+                    this.setSelectedText();
+                }
+            });
     }
-
-    onDone() {
-        this.emailEl.nativeElement.focus();
-        this.passwordEl.nativeElement.focus();
-        this.passwordEl.nativeElement.dismissSoftInput();
-    }
-
     goToBrowseRelevantInfo() {
         this.router.navigate(["relevantInfo"]).then();
+    }
+
+    onLogout() {
+        this.authService.logout();
     }
 }

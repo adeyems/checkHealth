@@ -1,18 +1,192 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+  <GridLayout rows="*" columns="2*,5*,*">
+    <Image
+      src="res://icon"
+      class="page-icon"
+      row="0"
+      verticalAlignment="center"
+      col="0"
+      stretch="aspectFit"
+    ></Image>
+    <Image
+      src="res://account"
+      class="account-icon"
+      row="0"
+      verticalAlignment="center"
+      col="2"
+      stretch="aspectFill"
+      (tap)="goToProfile()"
+    ></Image>
+    <Label
+      class="text-center action-bar-title"
+      row="0"
+      col="1"
+      verticalAlignment="center"
+      textWrap="true"
+      text="Monitoring & Secure Recording of Vital Signs for Asthmatic Patients"
+    ></Label>
+  </GridLayout>
 </ActionBar>
+<Scrollview>
+  <StackLayout class="page ">
+    <StackLayout paddingBottom="30" paddingTop="20">
+      <Label
+        class="text-center title"
+        textWrap="true"
+        text="View Daily Patient Vital Signs Recordings"
+      ></Label>
+    </StackLayout>
 
-<StackLayout  class="page ">
-    <StackLayout paddingBottom="50" paddingTop="20">
-        <Label class="text-center page-title" text="Patient Home Screen"></Label>
+    <StackLayout
+      class="hr-light"
+      paddingTop="30"
+      paddingBottom="30"
+    ></StackLayout>
+
+    <FlexboxLayout
+      justifyContent="center"
+      alignItems="center"
+      flexDirection="column"
+      width="100%"
+    >
+      <Label
+        text="Select Patient Practitioner Name & Surname"
+        textWrap="true"
+        class="text-deep-bold"
+        textAlignment="center"
+      ></Label>
+      <TextField
+        isUserInteractionEnabled="false"
+        [text]="patientFullname"
+        (tap)="openPatientBox()"
+        class="input"
+        width="50%"
+      ></TextField>
+      <Label [text]="errorText" *ngIf="errorText" color="red"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout
+      marginTop="20"
+      *ngIf="!vitalSignsModel && patientId"
+      justifyContent="center"
+      width="100%"
+      paddingLeft="20"
+      paddingRight="20"
+    >
+      <Label text="No vitals found!"></Label>
+    </FlexboxLayout>
+    <StackLayout marginTop="20" *ngIf="vitalSignsModel">
+      <StackLayout>
+        <FlexboxLayout
+          width="100%"
+          paddingLeft="10"
+          paddingRight="10"
+          alignItems="center"
+        >
+          <Label text="Blood Pressure" width="30%"></Label>
+          <FlexboxLayout
+            borderRadius="5"
+            borderWidth="1"
+            borderColor="#ddd"
+            padding="10"
+          >
+            <StackLayout paddingLeft="5" paddingright="5">
+              <Label class="underline" text="Lower" paddingBottom="8"></Label>
+              <FLexboxLayout height="45" alignItems="center">
+                <TextField
+                  class="input input-field"
+                  returnKeyType="next"
+                  keyboardType="number"
+                  [autocorrect]="false"
+                  autocapitalizationType="none"
+                  width="50"
+                  [(ngModel)]="vitalSignsModel.bloodPressure.lower"
+                  isUserInteractionEnabled="false"
+                ></TextField>
+                <Label text=" mmHg" textWrap="true"></Label>
+              </FLexboxLayout>
+            </StackLayout>
+            <StackLayout paddingLeft="5" paddingright="5">
+              <Label class="underline" text="Higher" paddingBottom="8"></Label>
+              <FLexboxLayout height="45" alignItems="center">
+                <TextField
+                  class="input input-field"
+                  returnKeyType="next"
+                  keyboardType="number"
+                  [autocorrect]="false"
+                  autocapitalizationType="none"
+                  width="50"
+                  [(ngModel)]="vitalSignsModel.bloodPressure.higher"
+                  isUserInteractionEnabled="false"
+                ></TextField>
+                <Label text=" mmHg" textWrap="true"></Label>
+              </FLexboxLayout>
+            </StackLayout>
+          </FlexboxLayout>
+        </FlexboxLayout>
+      </StackLayout>
+      <StackLayout marginTop="20">
+        <FlexboxLayout
+          width="100%"
+          paddingLeft="10"
+          paddingRight="10"
+          height="45"
+          alignItems="center"
+        >
+          <Label text="Heart Rate" textWrap="true" width="50%"></Label>
+          <TextField
+            class="input input-field"
+            returnKeyType="next"
+            keyboardType="number"
+            [autocorrect]="false"
+            autocapitalizationType="none"
+            width="20%"
+            [(ngModel)]="vitalSignsModel.heartRate"
+            isUserInteractionEnabled="false"
+          ></TextField>
+          <Label text=" bt/min"></Label>
+        </FlexboxLayout>
+      </StackLayout>
+      <StackLayout marginTop="20">
+        <FlexboxLayout
+          width="100%"
+          paddingLeft="10"
+          paddingRight="10"
+          height="45"
+          alignItems="center"
+        >
+          <Label text="Body temperature" textWrap="true" width="50%"></Label>
+          <TextField
+            class="input input-field"
+            returnKeyType="done"
+            keyboardType="number"
+            [autocorrect]="false"
+            autocapitalizationType="none"
+            [(ngModel)]="vitalSignsModel.bodyTemperature"
+            width="20%"
+            isUserInteractionEnabled="false"
+          ></TextField>
+          <Label text=" °C"></Label>>
+        </FlexboxLayout>
+      </StackLayout>
     </StackLayout>
-    <StackLayout paddingBottom="30">
-        <Button class="btn btn-primary" (tap)="goToBrowseRelevantInfo()" text="Browse Relevant Information"></Button>
+    <StackLayout paddingTop="20">
+      <GridLayout rows="*" columns="*,*,2*">
+        <Button
+          class="btn btn-black"
+          col="0"
+          row="0"
+          text="Back"
+          (tap)="goToDoctorHomeScreen()"
+        ></Button>
+        <Button
+          *ngIf="vitalSignsModel && patientId"
+          class="btn btn-black"
+          col="2"
+          row="0"
+          text="Send Message to Patient"
+          (tap)="sendMessageToPatient()"
+        ></Button>
+      </GridLayout>
     </StackLayout>
-    <StackLayout paddingBottom="30">
-        <Button class="btn btn-primary"  text="Provide Readings from Wearable"></Button>
-    </StackLayout>
-    <StackLayout>
-        <Button class="btn btn-primary" text="Create End of History"></Button>
-    </StackLayout>
-</StackLayout>
+  </StackLayout>
+</Scrollview>

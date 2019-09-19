@@ -1,10 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {RouterExtensions} from "nativescript-angular";
-import {of} from "rxjs";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {TextField} from "tns-core-modules/ui/text-field";
-import { AuthService } from "~/app/services/auth.service";
-import {ActivatedRoute} from "@angular/router";
+import {Observable} from "tns-core-modules/data/observable";
+import {DownloadManager} from "nativescript-downloadmanager";
 
 @Component({
     selector: "Home",
@@ -12,78 +9,44 @@ import {ActivatedRoute} from "@angular/router";
     templateUrl: "./relevant-info.component.html",
     styleUrls: ["./relevant-info.component.css"]
 })
-export class RelevantInfoComponent implements OnInit {
-    form: FormGroup;
-    emailControlIsValid = true;
-    passwordControlIsValid = true;
-    isLoading = false;
-    @ViewChild("passwordEl", {static: false}) passwordEl: ElementRef<TextField>;
-    @ViewChild("emailEl", {static: false}) emailEl: ElementRef<TextField>;
-    pageTitle: string;
-    public currentUser: string;
+
+export class RelevantInfoComponent extends Observable {
+    isVisible = false;
 
     constructor(
         private router: RouterExtensions,
-        private authService: AuthService,
-        private activatedRoute: ActivatedRoute
     ) {
-        this.activatedRoute.queryParams.subscribe( params => {
-            this.currentUser = params["user"];
-            console.log(this.currentUser);
+        super();
+    }
+
+    goToProfile() {
+        this.router.navigate(["profile"]).catch();
+    }
+
+    public download(url: string){
+        // Instantiate a Download Manager. The way it's done (it uses a BroadcastReceiver),
+        // it's mean to be kept alive during all the application lifetime. But we can kill unsubscribe
+        let dm = new DownloadManager();
+        // We download a file, in this example a 10mb test file.
+        // This is the Most simple version of doing it.
+        // Aside from that there are optional parameters for. Directory (always inside android/data/yourapp/),
+        // The file name, and title and description for the notification bar. By default it uses the file name
+        // as title, and no description.
+        alert("Ongoing download. You will be notified when it is done.");
+        dm.downloadFile(url,  (result, uri) => {
+            // result is a boolean, if the download was successful, it will return true
+            console.log(result);
+            const filename = (uri.split("downloads")[1]);
+            // Uri in file:// format of the downloaded file.
+            alert(`File Downloaded. Saved in Android/org.nativescript.checkHealth/files/downloads${filename}`);
+            this.stopDownload();
+            // unregisterBroadcast is used to unregister the broadcast (For example if you just want to
+            // download a single file).
+            dm.unregisterBroadcast();
         });
     }
 
-    ngOnInit() {
-        this.form = new FormGroup({
-            email: new FormControl(null, {
-                updateOn: 'blur',
-                validators: [Validators.required, Validators.email]
-            }),
-            password: new FormControl(null, {
-                updateOn: 'blur',
-                validators: [Validators.required, Validators.minLength(6)]
-            })
-        });
-
-        this.form.get('email').statusChanges.subscribe(status => {
-            this.emailControlIsValid = status === 'VALID';
-        });
-
-        this.form.get('password').statusChanges.subscribe(status => {
-            this.passwordControlIsValid = status === 'VALID';
-        });
-    }
-
-    onSubmit() {
-        this.emailEl.nativeElement.focus();
-        this.passwordEl.nativeElement.focus();
-        this.passwordEl.nativeElement.dismissSoftInput();
-
-        if (!this.form.valid) {
-            return;
-        }
-
-        const email = this.form.get('email').value;
-        const password = this.form.get('password').value;
-        this.form.reset();
-        this.emailControlIsValid = true;
-        this.passwordControlIsValid = true;
-        this.isLoading = true;
-        this.authService.login(email, password).subscribe(
-            resData => {
-                this.isLoading = false;
-                this.router.navigate(['/challenges'], { clearHistory: true }).then();
-            },
-            err => {
-                console.log(err);
-                this.isLoading = false;
-            }
-        );
-    }
-
-    onDone() {
-        this.emailEl.nativeElement.focus();
-        this.passwordEl.nativeElement.focus();
-        this.passwordEl.nativeElement.dismissSoftInput();
+    stopDownload(){
+        this.isVisible = true;
     }
 }

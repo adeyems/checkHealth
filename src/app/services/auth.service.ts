@@ -13,10 +13,8 @@ import {
 } from 'tns-core-modules/application-settings';
 
 import { UserModel} from "~/app/models/user.model";
-import { DoctorModel} from "~/app/models/doctor.model";
 import {VerticalAlignment} from "tns-core-modules/ui/enums";
 import stretch = VerticalAlignment.stretch;
-import {error} from "tns-core-modules/trace";
 import {PatientModel} from "~/app/models/patient.model";
 
 interface AuthResponseData {
@@ -32,7 +30,7 @@ interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private _user = new BehaviorSubject<UserModel>(null);
-    private tokenExpirationTimer: number;
+    private tokenExpirationTimer;
     private currentUser = "patient";
 
     constructor(
@@ -62,19 +60,21 @@ export class AuthService {
                     AuthService.handleError(errorRes.error.error.message);
                     return throwError(errorRes);
                 }),
-                /*tap(resData => {
+                tap(resData => {
                     if (resData && resData.idToken) {
-                        return this.createNewUser(name, surname, phone, email, password, resData)
+                        alert("Your Account was created successfully").catch();
+                        this.router.navigate(['patientLogin']);
+                        return this.createNewUser(resData, name, surname, phone, email)
                             .subscribe( resData => {
                                 console.log(resData);
                                 alert("Your Account was created successfully").catch();
                             })
                     }
-                })*/
+                })
             );
     }
 
-    login(email: string, password: string) {
+    login(email: string, password: string, users?: string[]) {
         return this.http
             .post<AuthResponseData>(
                 AuthService.Config.SIGNIN_URL,
@@ -86,11 +86,25 @@ export class AuthService {
                     return throwError(errorRes);
                 }),
                 tap(resData => {
+                    console.log('???????????',resData);
                     if (resData && resData.idToken) {
-                        console.log(resData);
+                        if (users.indexOf(resData.localId) > -1) {
+                            this.handleLogin(email, resData.idToken, resData.localId, 3600);
+                            alert('Welcome', )
+                        }
                     }
                 })
             );
+    }
+
+    checkUserType(userType: 'patients' | 'medical-practitioners') {
+        return this.http.get(`${AuthService.Config.FIREBASE_URL}/${userType}.json`)
+        .pipe(
+            catchError(errorRes => {
+                AuthService.handleError(errorRes.error.error.message);
+                return throwError(errorRes);
+            })
+        );
     }
 
     logout() {
@@ -99,7 +113,7 @@ export class AuthService {
         if (this.tokenExpirationTimer) {
             clearTimeout(this.tokenExpirationTimer);
         }
-        this.router.navigate(['login'], { clearHistory: true }).catch(error => console.log(error));
+        this.router.navigate([''], { clearHistory: true }).catch(error => console.log(error));
     }
 
     autoLogin() {
@@ -138,7 +152,7 @@ export class AuthService {
         expiresIn: number
     ) {
         const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-        const user = new UserModel(email, userId, token, expirationDate);
+        const user = new UserModel(userId, email, token, expirationDate);
         setString('userData', JSON.stringify(user));
         this.autoLogout(user.timeToExpiry);
         this._user.next(user);
@@ -157,11 +171,11 @@ export class AuthService {
         }
     }
 
-    public createNewUser() {
-        const newPatient = new PatientModel("wqdewfretgryhtuyrtgerfedasw", "name", "surname", "phone", "email", new Date());
-       // const newPatient = new PatientModel(resData.localId, name, surname, phone, email, new Date());
+    public createNewUser(resData, name, surname, phone, email) {
+        // const newPatient = new PatientModel("wqdewfretgryhtuyrtgerfedasw", "name", "surname", "phone", "email", new Date());
+       const newPatient = new PatientModel(resData.localId, name, surname, phone, email, new Date());
         return this.http.post(
-            `${AuthService.Config.FIREBASE_URL}/data.json`, {newPatient}
+            `${AuthService.Config.FIREBASE_URL}/patients/${resData.localId}.json`, newPatient
         ).pipe(
             catchError(errorRes => {
                 console.log(errorRes);
@@ -170,7 +184,6 @@ export class AuthService {
             }),
             tap(resData => {
                 if (resData ) {
-                    console.log(resData);
                    return resData;
                 }
             })

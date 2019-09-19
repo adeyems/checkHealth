@@ -1,15 +1,22 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    <GridLayout rows="*" columns="2*,5*,*">
+        <Image src="res://icon" class="page-icon" row="0" verticalAlignment="center" col="0" stretch="aspectFit"></Image>
+        <Image src="res://account" class="account-icon" row="0" verticalAlignment="center" col="2" stretch="aspectFill" (tap)="goToProfile()"></Image>
+        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording of Vital Signs for Asthmatic Patients"></Label>
+    </GridLayout>
 </ActionBar>
 
-<StackLayout  class="page ">
-    <StackLayout paddingBottom="50" paddingTop="20">
-        <Label class="text-center page-title" text="Medical Practitioner Home Screen"></Label>
+<ScrollView>
+    <StackLayout  class="page ">
+        <StackLayout paddingBottom="30" paddingTop="20">
+            <Label class="text-center title" text="Medical Practitioner Home Screen"></Label>
+        </StackLayout>
+        <StackLayout paddingBottom="30">
+            <Button class="btn btn-black" text="View Daily Patient Vital Signs Recordings" (tap)="goToPatientDailySigns()"></Button>
+        </StackLayout>
+        <StackLayout>
+            <Button class="btn btn-black" text="View Patient History of Vital Signs"  (tap)="goToHistory()"></Button>
+        </StackLayout>
     </StackLayout>
-    <StackLayout paddingBottom="30">
-        <Button class="btn btn-primary" text="View Daily Patient Vital Signs Recordings"></Button>
-    </StackLayout>
-    <StackLayout>
-        <Button class="btn btn-primary" text="View Patient History of Vital Signs" ></Button>
-    </StackLayout>
-</StackLayout>
+
+</ScrollView>

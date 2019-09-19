@@ -1,7 +1,10 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    <GridLayout rows="*" columns="2*,5*,*">
+        <Image src="res://icon" class="page-icon" row="0" verticalAlignment="center" col="0" stretch="aspectFit"></Image>
+         <Image src="res://account" row="0" class="account-icon" col="2" verticalAlignment="center" stretch="none" (tap)="onLogout()"></Image>
+         <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording of Vital Signs for Asthmatic Patients"></Label>
+    </GridLayout>
 </ActionBar>
-
 <StackLayout  class="page page-content">
     <StackLayout paddingBottom="70" paddingTop="20">
         <Label class="text-center page-title" text="Login"></Label>

@@ -1,0 +1,120 @@
+<ActionBar class="action-bar">
+    <GridLayout rows="*" columns="2*,5*,*">
+        <Image src="res://icon" class="page-icon" row="0" verticalAlignment="center" col="0" stretch="aspectFit"></Image>
+        <Image src="res://account" class="account-icon" row="0" verticalAlignment="center" col="2" stretch="aspectFill" (tap)="goToProfile()"></Image>
+        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording of Vital Signs for Asthmatic Patients"></Label>
+    </GridLayout>
+</ActionBar>
+<Scrollview>
+    <StackLayout  class="page ">
+        <StackLayout paddingBottom="30" paddingTop="20">
+            <Label class="text-center title" textWrap="true" text="View Daily Patient Vital Signs Recordings"></Label>
+        </StackLayout>
+        <StackLayout>
+            <GridLayout rows="*,*" columns="*,6*,6*,*">
+                <Label text="Reading Date" col="1" row="0"></Label>
+                <Label [text]="currentDate" col="2" row="0"></Label>
+                <Label text="Reading Time" col="1" row="1"></Label>
+                <Label [text]="currentTime" col="2" row="1"></Label>
+            </GridLayout>
+        </StackLayout>
+
+        <StackLayout class="hr-light" paddingTop="30" paddingBottom="30"></StackLayout>
+
+        <FlexboxLayout justifyContent="center" alignItems="center" flexDirection="column" width="100%">
+            <Label text="Select Medical Practitioner Name & Surname" textWrap="true"
+                class="text-deep-bold" textAlignment="center"></Label>
+            <TextField isUserInteractionEnabled="false" [text]="setSelectedText()"
+                (tap)="openMedicalPractitionerBox()" class="input" width="50%"></TextField>
+            <Label [text]="errorText" *ngIf="errorText" color="red"></Label>
+        </FlexboxLayout>
+        <StackLayout paddingTop="20">
+            <GridLayout rows="*" columns="*,8*,*">
+                <Button class="btn btn-black" col="1" row="0" text="Input Blood Pressure From Wearable Device" fontSize="15"></Button>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout>
+            <FlexboxLayout width="100%" paddingLeft="10" paddingRight="10" alignItems="center">
+                <Label text="Blood Pressure" width="30%"></Label>
+                <FlexboxLayout borderRadius="5" borderWidth="1" borderColor="#ddd" padding="10">
+                    <StackLayout paddingLeft="5" paddingright="5">
+                        <Label class="underline" text="Lower" paddingBottom="8"></Label>
+                        <FLexboxLayout height="45" alignItems="center">
+                                <TextField
+                                class="input input-field"
+                                returnKeyType="next"
+                                keyboardType="number"
+                                [autocorrect]="false"
+                                autocapitalizationType="none"
+                                width="50"
+                                [(ngModel)]="vitalSignsModel.bloodPressure.lower"
+                            ></TextField>
+                            <Label text=" mmHg" textWrap="true"></Label>
+                        </FLexboxLayout>
+                    </StackLayout>
+                    <StackLayout paddingLeft="5" paddingright="5">
+                        <Label class="underline" text="Higher" paddingBottom="8"></Label>
+                        <FLexboxLayout height="45" alignItems="center">
+                                <TextField
+                                class="input input-field"
+                                returnKeyType="next"
+                                keyboardType="number"
+                                [autocorrect]="false"
+                                autocapitalizationType="none"
+                                width="50"
+                                [(ngModel)]="vitalSignsModel.bloodPressure.higher"
+                            ></TextField>
+                            <Label text=" mmHg" textWrap="true"></Label>
+                        </FLexboxLayout>
+
+                    </StackLayout>
+                </FlexboxLayout>
+            </FlexboxLayout>
+        </StackLayout>
+        <StackLayout paddingTop="20">
+            <GridLayout rows="*" columns="*,8*,*">
+                <Button class="btn btn-black" col="1" row="0" text="Input Heart Rate From Wearable Device" fontSize="15"></Button>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout>
+            <FlexboxLayout width="100%" paddingLeft="10" paddingRight="10" height="45" alignItems="center">
+                <Label text="Heart Rate" textWrap="true" width="50%"></Label>
+                <TextField
+                        class="input input-field"
+                        returnKeyType="next"
+                        keyboardType="number"
+                        [autocorrect]="false"
+                        autocapitalizationType="none"
+                        width="20%"
+                        [(ngModel)]="vitalSignsModel.heartRate"
+                ></TextField>
+                <Label text="bt/min"></Label>
+            </FlexboxLayout>
+        </StackLayout>
+        <StackLayout paddingTop="20">
+            <GridLayout rows="*" columns="*,8*,*">
+                <Button class="btn btn-black" col="1" row="0" text="Input Body Temperature From Temperature Measurement Device" fontSize="15"></Button>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout>
+            <FlexboxLayout width="100%" paddingLeft="10" paddingRight="10" height="45" alignItems="center">
+                <Label text="Body temperature" textWrap="true" width="50%"></Label>
+                <TextField
+                        class="input input-field"
+                        returnKeyType="done"
+                        keyboardType="number"
+                        [autocorrect]="false"
+                        autocapitalizationType="none"
+                        [(ngModel)]="vitalSignsModel.bodyTemperature"
+                        width="20%"
+                ></TextField>
+                <HtmlView class="bold" [html]="degreeCelcius"></HtmlView>
+            </FlexboxLayout>
+        </StackLayout>
+        <StackLayout paddingTop="20">
+            <GridLayout rows="*" columns="*,*,*">
+                <Button class="btn btn-black" col="1" row="0" text="Submit" (tap)="onCreateReadingRecord()"></Button>
+            </GridLayout>
+        </StackLayout>
+    </StackLayout>
+</Scrollview>

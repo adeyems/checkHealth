@@ -1,10 +1,12 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from "@angular/core";
-import {RouterExtensions} from "nativescript-angular";
-import {of} from "rxjs";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {TextField} from "tns-core-modules/ui/text-field";
-import { AuthService } from "~/app/services/auth.service";
+import {Component, OnInit, ViewContainerRef} from "@angular/core";
+import {RouterExtensions, ModalDialogOptions, ModalDialogService} from "nativescript-angular";
 import {ActivatedRoute} from "@angular/router";
+import * as moment from "moment";
+import { DatePicker } from "tns-core-modules/ui/date-picker";
+
+import { AuthService } from "~/app/services/auth.service";
+import { DataService } from "../services/data.service";
+import { SelectListComponent } from "../modals/select-list/select-list.component";
 
 @Component({
     selector: "Home",
@@ -13,81 +15,153 @@ import {ActivatedRoute} from "@angular/router";
     styleUrls: ["./view-history.component.css"]
 })
 export class ViewHistoryComponent implements OnInit {
-    form: FormGroup;
-    emailControlIsValid = true;
-    passwordControlIsValid = true;
-    isLoading = false;
-    @ViewChild("passwordEl", {static: false}) passwordEl: ElementRef<TextField>;
-    @ViewChild("emailEl", {static: false}) emailEl: ElementRef<TextField>;
-    pageTitle: string;
-    public currentUser: string;
+    startDate: string;
+    endDate: string;
+    patientId: string;
+    patientList: any[] = [];
+    selectedIndex: number = -1;
+    selectedDay;
+    selectedDate;
+    selectedEndDate;
+    vitalsHistory = [];
+    historyDates: string[] = [];
+    viewMode: boolean = false;
+    isLoading: boolean = false;
 
     constructor(
         private router: RouterExtensions,
         private authService: AuthService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private dataService: DataService,
+        protected modalDialog: ModalDialogService,
+        protected vcRef: ViewContainerRef,
     ) {
-        this.activatedRoute.queryParams.subscribe( params => {
-            this.currentUser = params["user"];
-            console.log(this.currentUser);
-        });
+
     }
 
     ngOnInit() {
-        this.form = new FormGroup({
-            email: new FormControl(null, {
-                updateOn: 'blur',
-                validators: [Validators.required, Validators.email]
-            }),
-            password: new FormControl(null, {
-                updateOn: 'blur',
-                validators: [Validators.required, Validators.minLength(6)]
-            })
-        });
-
-        this.form.get('email').statusChanges.subscribe(status => {
-            this.emailControlIsValid = status === 'VALID';
-        });
-
-        this.form.get('password').statusChanges.subscribe(status => {
-            this.passwordControlIsValid = status === 'VALID';
+        this.dataService.fetchMedicalPractitioners('patients').subscribe(response => {
+            for (let key in response) {
+                this.patientList.push({id: key, value:`${response[key][Object.keys(response[key])[0]].name} ${response[key][Object.keys(response[key])[0]].surname}`});
+            }
         });
     }
 
-    onSubmit() {
-        this.emailEl.nativeElement.focus();
-        this.passwordEl.nativeElement.focus();
-        this.passwordEl.nativeElement.dismissSoftInput();
+    setSelectedText() {
+        if (this.selectedIndex > -1) {
+            this.patientId = this.patientList[this.selectedIndex].id;
+            return this.patientList[this.selectedIndex].value;
+        } else {
+            return 'Select';
+        }
+    }
 
-        if (!this.form.valid) {
+    public openPatientBox() {
+        const options: ModalDialogOptions = {
+            context: {
+                boxItems: this.patientList,
+                boxName: 'Patient',
+                selectedIndex: this.selectedIndex
+            },
+            fullscreen: false,
+            viewContainerRef: this.vcRef
+        }
+        this.modalDialog.showModal(SelectListComponent, options)
+            .then(response => {
+                if (response != undefined) {
+                    this.vitalsHistory = [];
+                    this.viewMode = false;
+                    this.selectedIndex = response;
+                    this.setSelectedText();
+                }
+            });
+    }
+
+    onPickerLoaded(args) {
+        let datePicker = <DatePicker>args.object;
+
+        datePicker.year = 2019;
+        datePicker.month = 1;
+        datePicker.day = 0;
+        datePicker.minDate = new Date(2019, 0, 1);
+        datePicker.maxDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    }
+
+    onEndDatePickerLoaded(args) {
+        let datePicker = <DatePicker>args.object;
+        datePicker.year = 2019;
+        datePicker.month = 1;
+        datePicker.day = 0;
+        datePicker.minDate = new Date(2019, 0, 1);
+        datePicker.maxDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    }
+
+    onDateChanged(args) {
+        this.selectedDate = moment(args.value, ["ddd MMM MM YYYY HH:mm:ss"]).format("YYYY-M-D");
+        this.selectedDay = moment(this.selectedDate, ["YYYY-MM-DD"]).format("e");
+        this.startDate = moment(this.selectedDate, ["YYYY-M-D"]).format("dddd, MMMM Do YYYY");
+    }
+
+    onEndDateChanged(args) {
+        this.selectedEndDate = moment(args.value, ["ddd MMM MM YYYY HH:mm:ss"]).format("YYYY-M-D");
+        this.endDate = moment(this.selectedEndDate, ["YYYY-M-D"]).format("dddd, MMMM Do YYYY");
+    }
+
+    generateHistoryDate() {
+        let daysDiff = moment(this.selectedEndDate, ["YYYY-M-D"]).diff(moment(this.selectedDate, ["YYYY-M-D"]), 'days');
+        this.historyDates = [];
+        this.historyDates.push(`${this.selectedDate}`);
+        for (let i = 1; i < daysDiff + 1; i++) {
+            let temp = moment(this.selectedDate, ["YYYY-M-D"]).add(i, 'days').format('YYYY-M-D');
+            this.historyDates.push(`${temp}`);
+        }
+    }
+
+    viewHistory() {
+        this.vitalsHistory = [];
+        this.generateHistoryDate();
+
+        if (this.selectedDay != 1) {
+            alert('Start of History must be Monday!');
+            return;
+        }
+        if (!this.patientId) {
+            alert('Please select a patient!');
             return;
         }
 
-        const email = this.form.get('email').value;
-        const password = this.form.get('password').value;
-        this.form.reset();
-        this.emailControlIsValid = true;
-        this.passwordControlIsValid = true;
+        this.viewMode = true;
         this.isLoading = true;
-        this.authService.login(email, password).subscribe(
-            resData => {
-                this.isLoading = false;
-                this.router.navigate(['/challenges'], { clearHistory: true }).then();
-            },
-            err => {
-                console.log(err);
-                this.isLoading = false;
-            }
-        );
-    }
 
-    onDone() {
-        this.emailEl.nativeElement.focus();
-        this.passwordEl.nativeElement.focus();
-        this.passwordEl.nativeElement.dismissSoftInput();
+        // this.dataService.fetchVitalHistory(this.patientId, this.selectedDate).subscribe(res => {
+        //     if (res) {
+        //         this.vitalsHistory = res[Object.keys(res)[0]];
+        //     }
+        //     this.isLoading = false;
+        // }, err => {
+        //     alert(err);
+        // })
+        this.dataService.fetchUserVitalsReading(this.patientId).subscribe(res => {
+            if (res) {
+                for (let key in res) {
+                    if (this.historyDates.indexOf(res[key].date) > -1) {
+                        res[key]['day'] = moment([res[key].date], ["YYYY-M-D"]).format("dddd");
+                        this.vitalsHistory.push(res[key]);
+                        // this.vitalsHistory[res[key].date] = res[key];
+                        // this.vitalsHistory[res[key].date]['day'] = moment([res[key].date], ["YYYY-M-D"]).format("dddd");
+                    }
+                }
+            }
+        }, err => {
+            alert(err);
+        })
     }
 
     goToBrowseRelevantInfo() {
         this.router.navigate(["relevantInfo"]).then();
+    }
+
+    goToProfile() {
+        this.router.navigate(["profile"]).catch();
     }
 }

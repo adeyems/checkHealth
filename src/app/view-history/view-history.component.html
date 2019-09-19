@@ -1,18 +1,168 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+  <GridLayout rows="*" columns="2*,5*,*">
+    <Image
+      src="res://icon"
+      class="page-icon"
+      row="0"
+      verticalAlignment="center"
+      col="0"
+      stretch="aspectFit"
+    ></Image>
+    <Image
+      src="res://account"
+      class="account-icon"
+      row="0"
+      verticalAlignment="center"
+      col="2"
+      stretch="aspectFill"
+      (tap)="goToProfile()"
+    ></Image>
+    <Label
+      class="text-center action-bar-title"
+      row="0"
+      col="1"
+      verticalAlignment="center"
+      textWrap="true"
+      text="Monitoring & Secure Recording of Vital Signs for Asthmatic Patients"
+    ></Label>
+  </GridLayout>
 </ActionBar>
 
-<StackLayout  class="page ">
-    <StackLayout paddingBottom="50" paddingTop="20">
-        <Label class="text-center page-title" text="Patient Home Screen"></Label>
+<Scrollview>
+  <StackLayout class="page">
+    <StackLayout paddingBottom="30" paddingTop="20">
+      <Label
+        class="text-center title"
+        textWrap="true"
+        text="View History of Patient Vital Signs of Recording Records"
+      ></Label>
     </StackLayout>
-    <StackLayout paddingBottom="30">
-        <Button class="btn btn-primary" (tap)="goToBrowseRelevantInfo()" text="Browse Relevant Information"></Button>
+    <FlexboxLayout
+      justifyContent="center"
+      alignItems="center"
+      flexDirection="column"
+      width="100%"
+    >
+      <Label
+        text="Select Patient Name & Surname"
+        textWrap="true"
+        class="text-deep-bold"
+        textAlignment="center"
+      ></Label>
+      <TextField
+        isUserInteractionEnabled="false"
+        [text]="setSelectedText()"
+        (tap)="openPatientBox()"
+        class="input"
+        width="50%"
+      ></TextField>
+    </FlexboxLayout>
+
+    <StackLayout marginTop="10">
+      <Label
+        text="Choose Start of History"
+        class="text-deep-bold"
+        textWrap="true"
+      ></Label>
+      <DatePicker
+        (loaded)="onPickerLoaded($event)"
+        (dateChange)="onDateChanged($event)"
+        verticalAlignment="center"
+      ></DatePicker>
     </StackLayout>
-    <StackLayout paddingBottom="30">
-        <Button class="btn btn-primary"  text="Provide Readings from Wearable"></Button>
+    <StackLayout marginTop="10">
+      <Label
+          text="Choose End of History"
+          class="text-deep-bold"
+          textWrap="true"
+      ></Label>
+      <DatePicker
+          (loaded)="onEndDatePickerLoaded($event)"
+          (dateChange)="onEndDateChanged($event)"
+          verticalAlignment="center"
+      ></DatePicker>
     </StackLayout>
-    <StackLayout>
-        <Button class="btn btn-primary" text="Create End of History"></Button>
+
+    <StackLayout marginTop="10">
+      <GridLayout rows="*,*" columns="*,6*,6*,*">
+        <Label
+          textWrap="true"
+          text="Start Date of History"
+          col="1"
+          row="0"
+        ></Label>
+        <Label
+          textWrap="true"
+          [text]="startDate"
+          col="2"
+          row="0"
+          textWrap="true"
+        ></Label>
+        <Label
+          textWrap="true"
+          text="End of History"
+          col="1"
+          row="1"
+          textWrap="true"
+        ></Label>
+        <Label textWrap="true" [text]="endDate" col="2" row="1"></Label>
+      </GridLayout>
     </StackLayout>
-</StackLayout>
+
+    <StackLayout
+      class="hr-light"
+      paddingTop="30"
+      paddingBottom="30"
+    ></StackLayout>
+
+    <StackLayout paddingTop="20">
+      <Button class="btn btn-black" text="View" (tap)="viewHistory()"></Button>
+    </StackLayout>
+    <ActivityIndicator [busy]="isLoading && !vitalsHistory"></ActivityIndicator>
+    <FlexboxLayout
+      *ngIf="!vitalsHistory && viewMode"
+      justifyContent="center"
+      width="100%"
+    >
+      <Label textWrap="true" text="No Vitals Record Found!"></Label>
+    </FlexboxLayout>
+    <StackLayout class="history-box" *ngIf="vitalsHistory.length > 0">
+      <FlexboxLayout class="history-item header">
+        <Label textWrap="true" text="Date" class="hb-col"></Label>
+        <Label
+          text="Blood Pressure - high (mmHg)"
+          class="hb-col"
+          textWrap="true"
+        ></Label>
+        <Label
+          text="Blood Pressure - low (mmHg)"
+          class="hb-col"
+          textWrap="true"
+        ></Label>
+        <Label
+          text="Heart Rate (bt/min)"
+          class="hb-col"
+          textWrap="true"
+        ></Label>
+        <Label
+          textWrap="true"
+          text="Body Temp. (°C)"
+          class="hb-col"
+          textWrap="true"
+        ></Label>
+      </FlexboxLayout>
+      <FlexboxLayout
+        class="history-item items"
+        *ngFor="let vh of vitalsHistory">
+        <StackLayout class="hb-col">
+          <Label [text]="vh.day"></Label>
+          <Label [text]="'('+vh.date+')'"></Label>
+        </StackLayout>
+        <Label class="hb-col" [text]="vh.bloodPressure.higher"></Label>
+        <Label class="hb-col" [text]="vh.bloodPressure.lower"></Label>
+        <Label class="hb-col" [text]="vh.heartRate"></Label>
+        <Label class="hb-col" [text]="vh.bodyTemperature"></Label>
+      </FlexboxLayout>
+    </StackLayout>
+  </StackLayout>
+</Scrollview>

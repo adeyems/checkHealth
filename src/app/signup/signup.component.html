@@ -1,10 +1,13 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    <GridLayout rows="*" columns="2*,5*,*">
+        <Image src="res://icon" class="page-icon" row="0" verticalAlignment="center" col="0" stretch="aspectFit"></Image>
+        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording of Vital Signs for Asthmatic Patients"></Label>
+    </GridLayout>
 </ActionBar>
 <ScrollView>
     <StackLayout class="page page-icon form" [formGroup]="form" paddingBottom="10">
-        <StackLayout paddingBottom="50" paddingTop="10" >
-            <Label class="text-center page-title" text="Medical Practitioner Login Screen'"></Label>
+        <StackLayout paddingBottom="25" paddingTop="10" >
+            <Label class="text-center title" text="Asthmatic Patient Registration Screen"></Label>
         </StackLayout>
         <StackLayout>
             <TextField
@@ -44,12 +47,13 @@
                     [autocorrect]="false"
                     autocapitalizationType="none"
                     formControlName="phone"
-                    hint="Mobile Number: +234/+353 *** **** ***"
+                    [text]="phone"
                     #phoneEl
             ></TextField>
             <Label  class="input-error"
                     *ngIf="!phoneControlIsValid"
-                    text="Must be 14+ characters long including country code"
+                    textWrap="true"
+                    text="Must start with +353 be 13 characters long including country code."
             ></Label>
         </StackLayout>
         <StackLayout>
@@ -66,13 +70,14 @@
             <Label
                     *ngIf="!emailControlIsValid"
                     class="input-error"
-                    text="Please enter a valid email."
+                    textWrap="true"
+                    text="Please enter a valid email (Gmail, Yahoo, Hotmail and Outlook.)"
             ></Label>
         </StackLayout>
         <StackLayout class="">
             <TextField
                     class="input input-field"
-                    returnKeyType="done"
+                    returnKeyType="next"
                     [autocorrect]="false"
                     autocapitalizationType="none"
                     [secure]="true"
@@ -83,7 +88,8 @@
             ></TextField>
             <Label  class="input-error"
                     *ngIf="!passwordControlIsValid"
-                    text="Must be 8+ characters long with uppercase, lowercase, and numbers."
+                    textwrap="true"
+                    text="Must be 8+ characters long with uppercase, lowercase, number(s) and special character(s)."
             ></Label>
         </StackLayout>
         <StackLayout class="">
@@ -108,11 +114,6 @@
                 text="Submit"
                 (tap)="onSubmit()"
                 [disabled]="!form.valid"
-        ></Button>
-        <Button
-                class="btn password-login-button"
-                text="Submit"
-                (tap)="newUser()"
         ></Button>
         <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
     </StackLayout>

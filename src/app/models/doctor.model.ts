@@ -1,26 +1,12 @@
 export class DoctorModel {
-  constructor(
-    public email: string,
-    public id: string,
-    private _token: string,
-    private _tokenExpirationDate: Date
-  ) {}
-
-  get isAuth() {
-    return !!this.token;
-  }
-
-  get token() {
-    if (!this._token) {
-      return null;
+    constructor(
+        public id: string,
+        public name: string,
+        public surname: string,
+        public phone: string,
+        public email: string,
+        private date: Date
+    ) {
     }
-    if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
-      return null;
-    }
-    return this._token;
-  }
-
-  get timeToExpiry() {
-    return this._tokenExpirationDate.getTime() - new Date().getTime();
-  }
 }
+

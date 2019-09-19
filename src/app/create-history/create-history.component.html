@@ -1,18 +1,109 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Monitoring & Secure Recording Vital Signs for Asthmatic Patients"></Label>
+    <GridLayout rows="*" columns="2*,5*,*">
+        <Image src="res://icon" class="page-icon" row="0" verticalAlignment="center" col="0" stretch="aspectFit"></Image>
+        <Image src="res://account" class="account-icon" row="0" verticalAlignment="center" col="2" stretch="aspectFill" (tap)="onLogout()"></Image>
+        <Label class="text-center action-bar-title" row="0" col="1" verticalAlignment="center" textWrap="true" text="Monitoring & Secure Recording of Vital Signs for Asthmatic Patients"></Label>
+    </GridLayout>
 </ActionBar>
 
-<StackLayout  class="page ">
-    <StackLayout paddingBottom="50" paddingTop="20">
-        <Label class="text-center page-title" text="Patient Home Screen"></Label>
+<Scrollview>
+    <StackLayout  class="page ">
+        <StackLayout paddingBottom="30" paddingTop="20">
+            <Label class="text-center title" textWrap="true" text="Create End of Week History Record of Readings"></Label>
+        </StackLayout>
+        <StackLayout>
+            <GridLayout rows="*,*,*" columns="*,6*,6*,*">
+                <Label text="History ID" col="1" row="0"></Label>
+                <Label text="H123" col="2" row="0"></Label>
+                <Label text="Patient ID" col="1" row="1" ></Label>
+                <Label text="P123" col="2" row="1" ></Label>
+                <Label text="Medical Practitioner ID" col="1" row="2"></Label>
+                <Label text="MP123" col="2" row="2"></Label>
+            </GridLayout>
+        </StackLayout>
+
+        <StackLayout class="hr-light" paddingTop="30" paddingBottom="30"></StackLayout>
+
+        <StackLayout>
+            <GridLayout rows="*,*" columns="*,6*,6*,*">
+                <Label text="Start Date of History" col="1" row="0"></Label>
+                <Label [text]="startDate" col="2" row="0"></Label>
+                <Label text="End Date of History" col="1" row="1"></Label>
+                <Label [text]="endDate" col="2" row="1"></Label>
+            </GridLayout>
+        </StackLayout>
+
+        <StackLayout class="hr-light" paddingTop="30" paddingBottom="30"></StackLayout>
+
+        <StackLayout>
+            <Label text="Select Medical Practitioner Name & Surname" textWrap="true"
+                class="text-deep-bold" textAlignment="center"></Label>
+            <TextField isUserInteractionEnabled="false" [text]="setSelectedText()"
+                (tap)="openMedicalPractitionerBox()" class="input" width="50%"></TextField>
+            <Label [text]="errorText" *ngIf="errorText" color="red"></Label>
+        </StackLayout>
+        <StackLayout>
+            <GridLayout columns="*,*,*,*,*,*,*,*" rows="*,*,*,*,*,*">
+                <Label row="0" class="table-head" col="0" text=""></Label>
+                <Label row="0" class="table-head" col="1" text="Monday"></Label>
+                <Label row="0" class="table-head" col="2" text="Tuesday"></Label>
+                <Label row="0" class="table-head" col="3" text="Wednesday"></Label>
+                <Label row="0" class="table-head" col="4" text="Thursday"></Label>
+                <Label row="0" class="table-head" col="5" text="Friday"></Label>
+                <Label row="0" class="table-head" col="6" text="Saturday"></Label>
+                <Label row="0" class="table-head" col="7" text="Sunday"></Label>
+                <Label row="1" class="table-head" col="0" text=""></Label>
+                <Label row="1" class="odd" col="1" [text]="monday"></Label>
+                <Label row="1" class="odd" col="2" [text]="tuesday"></Label>
+                <Label row="1" class="odd" col="3" [text]="wednesday"></Label>
+                <Label row="1" class="odd" col="4" [text]="thursday"></Label>
+                <Label row="1" class="odd" col="5" [text]="friday"></Label>
+                <Label row="1" class="odd" col="6" [text]="saturday"></Label>
+                <Label row="1" class="odd" col="7" [text]="sunday"></Label>
+                <GridLayout row="2" class="odd" col="0" rows="*" columns="*,*" class="table-head">
+                    <Label row="0" col="0" text="B.P-"></Label>
+                    <Label row="0" col="1" text="Low:"></Label>
+                </GridLayout>
+                <GridLayout row="3" class="even" col="0" rows="*" columns="*,*">
+                    <Label row="0" class="table-head" col="0" text=""></Label>
+                    <Label row="0" class="table-head" col="1" text="High"></Label>
+                </GridLayout>
+                <Label row="2" class="odd" col="1" text="12mmHg"></Label>
+                <Label row="2" class="odd" col="2" text="12mmHg"></Label>
+                <Label row="2" class="odd" col="3" text="12mmHg"></Label>
+                <Label row="2" class="odd" col="4" text="12mmHg"></Label>
+                <Label row="2" class="odd" col="5" text="12mmHg"></Label>
+                <Label row="2" class="odd" col="6" text="12mmHg"></Label>
+                <Label row="2" class="odd" col="7" text="12mmHg"></Label>
+                <Label row="3" class="even" col="1" text="52mmHg"></Label>
+                <Label row="3" class="even" col="2" text="52mmHg"></Label>
+                <Label row="3" class="even" col="3" text="52mmHg"></Label>
+                <Label row="3" class="even" col="4" text="62mmHg"></Label>
+                <Label row="3" class="even" col="5" text="72mmHg"></Label>
+                <Label row="3" class="even" col="6" text="82mmHg"></Label>
+                <Label row="3" class="even" col="7" text="92mmHg"></Label>
+                <Label row="4" class="table-head" col="0" text="H.R(b/min)" textWrap="true"></Label>
+                <Label row="4" class="odd" col="1" text="81"></Label>
+                <Label row="4" class="odd" col="2" text="82"></Label>
+                <Label row="4" class="odd" col="3" text="80"></Label>
+                <Label row="4" class="odd" col="4" text="80"></Label>
+                <Label row="4" class="odd" col="5" text="72"></Label>
+                <Label row="4" class="odd" col="6" text="73"></Label>
+                <Label row="4" class="odd" col="7" text="72"></Label>
+                <HtmlView row="5" class="table-head" col="0" [html]="degreeCelcius"></HtmlView>
+                <Label row="5" class="even" col="1" text="33"></Label>
+                <Label row="5" class="even" col="2" text="32"></Label>
+                <Label row="5" class="even" col="3" text="32"></Label>
+                <Label row="5" class="even" col="4" text="32"></Label>
+                <Label row="5" class="even" col="5" text="31"></Label>
+                <Label row="5" class="even" col="6" text="33"></Label>
+                <Label row="5" class="even" col="7" text="32"></Label>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout paddingTop="20">
+            <GridLayout rows="*" columns="*,2*,*">
+                <Button class="btn btn-primary" col="1" row="0" text="Create History Record" ></Button>
+            </GridLayout>
+        </StackLayout>
     </StackLayout>
-    <StackLayout paddingBottom="30">
-        <Button class="btn btn-primary" (tap)="goToBrowseRelevantInfo()" text="Browse Relevant Information"></Button>
-    </StackLayout>
-    <StackLayout paddingBottom="30">
-        <Button class="btn btn-primary"  text="Provide Readings from Wearable"></Button>
-    </StackLayout>
-    <StackLayout>
-        <Button class="btn btn-primary" text="Create End of History"></Button>
-    </StackLayout>
-</StackLayout>
+</Scrollview>

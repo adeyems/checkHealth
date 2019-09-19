@@ -5,6 +5,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TextField} from "tns-core-modules/ui/text-field";
 import { AuthService } from "~/app/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
+import { setString } from "tns-core-modules/application-settings/application-settings";
 
 @Component({
     selector: "Home",
@@ -55,7 +56,41 @@ export class DoctorLoginComponent implements OnInit {
     }
 
     onSubmit() {
-        this.router.navigate(["doctorHome"]).then()
+        this.emailEl.nativeElement.focus();
+        this.passwordEl.nativeElement.focus();
+        this.passwordEl.nativeElement.dismissSoftInput();
+
+        if (!this.form.valid) {
+            return;
+        }
+
+        const email = this.form.get('email').value;
+        const password = this.form.get('password').value;
+
+        this.form.reset();
+        this.emailControlIsValid = true;
+        this.passwordControlIsValid = true;
+        this.isLoading = true;
+        this.authService.checkUserType('medical-practitioners')
+            .subscribe(response => {
+                const keys = Object.keys(response);
+                this.authService.login(email, password, keys).subscribe(
+                    resData => {
+                        this.isLoading = false;
+                        if (keys.indexOf(resData.localId) > -1) {
+                            setString('userType', JSON.stringify('medical-practitioners'));
+                            this.router.navigate(['doctorHome'], { clearHistory: true }).then();
+                        } else {
+                            alert('User not recognized!!!');
+                        }
+                    },
+                    err => {
+                        console.log(err);
+                        this.isLoading = false;
+                    }
+                );
+
+            });
     }
 
     onDone() {
@@ -63,4 +98,8 @@ export class DoctorLoginComponent implements OnInit {
         this.passwordEl.nativeElement.focus();
         this.passwordEl.nativeElement.dismissSoftInput();
     }
+
+    goToForgotPassword() {
+        this.router.navigate(["forgotPassword"])
+            .catch()    }
 }

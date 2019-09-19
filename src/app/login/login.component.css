@@ -1,0 +1,17 @@
+Label {
+    font-size: 15px;
+}
+.title {
+    font-size: 50%;
+    color: black;
+    font-family: "Al Bayan";
+}
+
+.page-icon{
+    width: 50%;
+    height: 50%;
+}
+
+.account-icon {
+    font-size: 50%;
+}
