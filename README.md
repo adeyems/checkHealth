@@ -1,5 +1,5 @@
-#checkHealth 
-###CheckHealth is an Android and iOS Nativescript mobile app for Asthma patients and medical practitioners. 
+# checkHealth 
+### CheckHealth is an Android and iOS Nativescript mobile app for Asthma patients and medical practitioners. 
 This app helps asthmatic patients in keeping track of their health. It involves both the doctor and patient sections. Patients can read on asthma write-ups and relevant information. 
 Also, patients can upload their daily vital information and send it to the doctor by creating a weekly history.
 
