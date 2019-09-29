@@ -5,6 +5,8 @@ Also, patients can upload their daily vital information and send it to the docto
 
 Doctors can see patients daily vitals as well as their weekly histories. They can send a message to patients when they notice abnormal readings.
 
+##### To run in development, fill in the Firebase URL and API_KEY in the `src/app/helpers/key.ts` file. 
+
 To run on android  `tns run android`
 
 To run on iOS   `tns run iOS`
