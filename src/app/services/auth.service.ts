@@ -16,6 +16,7 @@ import { UserModel} from "~/app/models/user.model";
 import {VerticalAlignment} from "tns-core-modules/ui/enums";
 import stretch = VerticalAlignment.stretch;
 import {PatientModel} from "~/app/models/patient.model";
+import {keys} from "~/app/helpers/keys";
 
 interface AuthResponseData {
     kind: string;
@@ -39,11 +40,12 @@ export class AuthService {
     ) {}
 
     static Config = {
-        SIGNUP_URL: "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAqTK1rEZ_-krBUwEwkzMNwAenJxiiCnMY",
-        SIGNIN_URL: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAqTK1rEZ_-krBUwEwkzMNwAenJxiiCnMY",
-        FIREBASE_API_KEY: "AIzaSyAqTK1rEZ_-krBUwEwkzMNwAenJxiiCnMY",
-        FIREBASE_URL:"https://checkhealth-51468.firebaseio.com"
+        SIGNUP_URL: keys.SIGNUP_URL,
+        SIGNIN_URL: keys.SIGNIN_URL,
+        FIREBASE_API_KEY: keys.FIREBASE_API_KEY,
+        FIREBASE_APP_URL: keys.FIREBASE_APP_URL
     };
+
     get user() {
         return this._user.asObservable();
     }
@@ -98,7 +100,7 @@ export class AuthService {
     }
 
     checkUserType(userType: 'patients' | 'medical-practitioners') {
-        return this.http.get(`${AuthService.Config.FIREBASE_URL}/${userType}.json`)
+        return this.http.get(`${AuthService.Config.FIREBASE_APP_URL}/${userType}.json`)
         .pipe(
             catchError(errorRes => {
                 AuthService.handleError(errorRes.error.error.message);
@@ -175,7 +177,9 @@ export class AuthService {
         // const newPatient = new PatientModel("wqdewfretgryhtuyrtgerfedasw", "name", "surname", "phone", "email", new Date());
        const newPatient = new PatientModel(resData.localId, name, surname, phone, email, new Date());
         return this.http.post(
-            `${AuthService.Config.FIREBASE_URL}/patients/${resData.localId}.json`, newPatient
+            `${AuthService.Config.FIREBASE_APP_URL}/medical-practitioners/${resData.localId}.json`, newPatient
+                //`${AuthService.Config.FIREBASE_APP_URL}/patients/${resData.localId}.json`, newPatient
+
         ).pipe(
             catchError(errorRes => {
                 console.log(errorRes);

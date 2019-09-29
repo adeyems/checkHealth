@@ -4,15 +4,16 @@ import { catchError, take, switchMap } from "rxjs/operators";
 import { throwError, of } from "rxjs";
 import { alert } from "tns-core-modules/ui/dialogs/dialogs";
 import { AuthService } from "./auth.service";
+import {keys} from "~/app/helpers/keys";
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
 
     static Config = {
-        SIGNUP_URL: "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAqTK1rEZ_-krBUwEwkzMNwAenJxiiCnMY",
-        SIGNIN_URL: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAqTK1rEZ_-krBUwEwkzMNwAenJxiiCnMY",
-        FIREBASE_API_KEY: "AIzaSyAqTK1rEZ_-krBUwEwkzMNwAenJxiiCnMY",
-        FIREBASE_URL:"https://checkhealth-51468.firebaseio.com"
+        SIGNUP_URL: keys.SIGNUP_URL,
+        SIGNIN_URL: keys.SIGNIN_URL,
+        FIREBASE_API_KEY: keys.FIREBASE_API_KEY,
+        FIREBASE_APP_URL: keys.FIREBASE_APP_URL
     };
 
     constructor(
@@ -28,7 +29,7 @@ export class DataService {
                 if (!currentUser || !currentUser.isAuth) {
                     return of(null);
                 }
-                return this.http.get(`${DataService.Config.FIREBASE_URL}/${userType}/${currentUser.id}.json?auth=${currentUser.token}`)
+                return this.http.get(`${DataService.Config.FIREBASE_APP_URL}/${userType}/${currentUser.id}.json?auth=${currentUser.token}`)
                 .pipe(
                     catchError(errorRes => {
                         DataService.handleError(errorRes.error.error.message);
@@ -48,7 +49,7 @@ export class DataService {
                 if (!currentUser || !currentUser.isAuth) {
                     return of(null);
                 }
-                return this.http.put(`${DataService.Config.FIREBASE_URL}/${userType}/${currentUser.id}/${profileId}.json?auth=${currentUser.token}`,
+                return this.http.put(`${DataService.Config.FIREBASE_APP_URL}/${userType}/${currentUser.id}/${profileId}.json?auth=${currentUser.token}`,
                 payload)
                 .pipe(
                     catchError(errorRes => {
@@ -61,7 +62,7 @@ export class DataService {
     }
 
     public fetchMedicalPractitioners(userType: 'patients' | 'medical-practitioners') {
-        return this.http.get(`${DataService.Config.FIREBASE_URL}/${userType}.json`)
+        return this.http.get(`${DataService.Config.FIREBASE_APP_URL}/${userType}.json`)
         .pipe(
             catchError(errorRes => {
                 DataService.handleError(errorRes.error.error.message);
@@ -82,7 +83,7 @@ export class DataService {
                     return of(null);
                 }
                 return this.http.post(
-                    `${DataService.Config.FIREBASE_URL}/daily-reading-records/${currentUser.id}.json/?auth=${currentUser.token}`, vitalSigns
+                    `${DataService.Config.FIREBASE_APP_URL}/daily-reading-records/${currentUser.id}.json/?auth=${currentUser.token}`, vitalSigns
                 ).pipe(
                     catchError(errorRes => {
                         console.log(errorRes);
@@ -104,7 +105,7 @@ export class DataService {
                             return of(null);
                         }
                         return this.http.get(
-                            `${DataService.Config.FIREBASE_URL}/daily-reading-records/${currentUser.id}.json?auth=${currentUser.token}`
+                            `${DataService.Config.FIREBASE_APP_URL}/daily-reading-records/${currentUser.id}.json?auth=${currentUser.token}`
                         ).pipe(
                             catchError(errorRes => {
                                 console.log(errorRes);
@@ -116,7 +117,7 @@ export class DataService {
             );
         }
         return this.http.get(
-            `${DataService.Config.FIREBASE_URL}/daily-reading-records/${patientId}.json`
+            `${DataService.Config.FIREBASE_APP_URL}/daily-reading-records/${patientId}.json`
         ).pipe(
             catchError(errorRes => {
                 console.log(errorRes);
@@ -135,7 +136,7 @@ export class DataService {
                     return of(null);
                 }
                 return this.http.post(
-                    `${DataService.Config.FIREBASE_URL}/vitals-history/${medPractId}/${currentUser.id}/${startDate}.json?auth=${currentUser.token}`, payload).pipe(
+                    `${DataService.Config.FIREBASE_APP_URL}/vitals-history/${medPractId}/${currentUser.id}/${startDate}.json?auth=${currentUser.token}`, payload).pipe(
                         catchError(errorRes => {
                             console.log(errorRes);
                             DataService.handleError(errorRes.error.error.message);
@@ -155,7 +156,7 @@ export class DataService {
                     return of(null);
                 }
                 return this.http.get(
-                    `${DataService.Config.FIREBASE_URL}/vitals-history/${currentUser.id}/${patientId}/${startDate}.json?auth=${currentUser.token}`
+                    `${DataService.Config.FIREBASE_APP_URL}/vitals-history/${currentUser.id}/${patientId}/${startDate}.json?auth=${currentUser.token}`
                 ).pipe(
                     catchError(errorRes => {
                         console.log(errorRes);
@@ -169,7 +170,7 @@ export class DataService {
 
     fetchPatientVitals(patientId: string) {
         return this.http.get(
-            `${DataService.Config.FIREBASE_URL}/daily-reading-records/${patientId}/.json?orderBy="$key"&limitToLast=1`
+            `${DataService.Config.FIREBASE_APP_URL}/daily-reading-records/${patientId}/.json?orderBy="$key"&limitToLast=1`
         ).pipe(
             catchError(errorRes => {
                 console.log(errorRes);
@@ -180,7 +181,7 @@ export class DataService {
     }
 
     sendPatientMessage(payload) {
-        return this.http.post('https://api.vertexiac.com/api/send/message',
+        return this.http.post(keys.MESSAGE_CLIENT_URL,
             payload,
             {headers: {"content-type" : "application/json"}});
     }
